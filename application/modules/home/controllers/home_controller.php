@@ -16,7 +16,6 @@ class Home_controller extends Backend_Controller
         $this->load->module('template/template_controller');
     }
 
-
     /**
      * Steps of making site layout:
      * 1. In method of current controller: load Template Controller and pass it the URI of desired view that you want to display
@@ -26,8 +25,8 @@ class Home_controller extends Backend_Controller
     public function index()
     {
         //Call the layout (as method of template controller) that you want to display
-        $data['actions'] = $this->init_actions();
-        $this->template_controller->demo_template('home', 'home_index', $data);
+        //$data['actions'] = $this->init_actions();
+        $this->template_controller->demo_template('home', 'index');
     }
 
     /**
@@ -36,9 +35,12 @@ class Home_controller extends Backend_Controller
     function init_actions()
     {
         $actions = array(
-            anchor('account/account_controller/view_crud', 'Manage Inkiu accounts'),
+            anchor('account/account_controller', 'Manage Inkiu accounts'),
             anchor('account/account_controller/view_create', 'Create Inkiu account'),
-            anchor('authentication/authentication_controller/', 'Authentication')
+            anchor('authentication/authentication_controller/', 'Authentication'),
+            anchor('rbac/perm_controller/', 'Manage permissions'),
+            anchor('rbac/role_controller/', 'Manage roles'),
+            anchor('http://inkiu.vn/irbs-dms/index.php/api/api_controller/order', 'Access to external system: get list orders')
         );
         return $actions;
     }

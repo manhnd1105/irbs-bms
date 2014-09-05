@@ -1,18 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * Example
- *
- * This is an example of a few basic user interaction methods you could use
- * all done with a hardcoded array.
- *
- * @package        CodeIgniter
- * @subpackage    Rest Server
- * @category    Controller
- * @author        Phil Sturgeon
- * @link        http://philsturgeon.co.uk/code/
- */
-
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 require_once APPPATH . '/libraries/REST_Controller.php';
 
@@ -22,108 +9,141 @@ require_once APPPATH . '/libraries/REST_Controller.php';
 class Api_controller extends REST_Controller
 {
     /**
+     * @var super_classes\InkiuAccountFactory
+     */
+    private $account_factory;
+
+    /**
+     * @var super_classes\RestrictAccessFactory
+     */
+    private $restrict_factory;
+
+    /**
      *
      */
     function __construct()
     {
         parent::__construct();
-        //Load all super classes
-        foreach (glob(APPPATH . "libraries/super_classes1/*.php") as $filename) {
-            require_once($filename);
-        }
-        $this->load->model('account/Model_account');
-        $this->load->model('account/Model_role');
+        $this->account_factory = \super_classes\InkiuAccountFactory::get_instance();
+        $this->restrict_factory = \super_classes\RestrictAccessFactory::get_instance();
     }
 
-    /* 	public function send_post()
-        {
-            var_dump($this->request->body);
-        }
-        public function send_put()
-        {
-            var_dump($this->put('foo'));
-        } */
-    //Read all accounts information
     /**
-     *
+     * Return information of all accounts
      */
     function accounts_get()
     {
-        $accounts = Inkiu_account_factory::load_account();
-        if ($accounts) {
-            $this->response($accounts, 200); // 200 being the HTTP response code
+        $info = $this->account_factory->load_accounts_info();
+        if ($info) {
+            $this->response($info, 200); // 200 being the HTTP response code
         } else {
             $this->response(array('error' => 'Could not find any accounts!'), 404);
         }
     }
 
     /**
-     *
+     * Return information of an account
      */
     function account_get()
     {
-        $account_id = $this->get('id');
-        if (!$account_id) {
-            //Get an account with its id provided
-            $account = Inkiu_account_factory::load_account($account_id);
-            if ($account) {
-                $this->response($account->get_props(), 400);
-            } else {
-                $this->response(array('error' => 'Accounts could not be found'), 404);
-            }
+        $id = $this->get('id');
+        $info = $this->account_factory->load_accounts_info($id);
+        if ($info) {
+            $this->response($info, 400);
         } else {
-            //Get all accounts
-            $accounts = Inkiu_account_factory::load_account();
-            if ($accounts) {
-                $accounts_info = array();
-                foreach ($accounts as $account) {
-                    $accounts_info[] = $account->get_props();
-                }
-                $this->response($accounts_info, 200);
-            } else {
-                $this->response(array('error' => 'Accounts could not be found'), 404);
-            }
-
+            $this->response(array('error' => 'Account could not be found'), 404);
         }
     }
-    //Update information of an account and respond with status/errors
+
     /**
-     *
+     * Update information of an account and respond with status/errors
      */
     function account_post()
     {
-        /*        $model_account = $this->Model_account;
-                $account_id = $this->post('account_id');
-                $account_name = $this->post('account_name');
-                $staff_name = $this->post('staff_name');
-                $password = $this->post('password');
-                $address = $this->post('address');*/
-        //$this->some_model->updateUser( $this->get('id') );
-        $message = array(
-            'id' => $this->get('id'),
-            'name' => $this->post('name'),
-            'email' => $this->post('email'),
-            'message' => 'ADDED!');
-
-        $this->response($message, 200); // 200 being the HTTP response code
+        $info = $this->post();
+        $status = $this->account_factory->update_account($info);
+        if ($status) {
+            $this->response(array('success' => 'Account created'), 200);
+        } else {
+            $this->response(array('error' => 'Account could not be created'), 404);
+        }
     }
-    //Create an account with provided information and respond with status/errors
+
     /**
-     *
+     * Create an account with provided information and respond with status/errors
      */
     function account_put()
     {
-
+        $info = $this->put();
+        $status = $this->account_factory->create_account($info);
+        if ($status) {
+            $this->response(array('success' => 'Account created'), 200);
+        } else {
+            $this->response(array('error' => 'Account could not be created'), 404);
+        }
     }
-    //Delete an account with provided id and respond with status/errors
+
     /**
-     *
+     * Delete an account with provided id and respond with status/errors
      */
     function account_delete()
     {
-        //$this->some_model->deletesomething( $this->get('id') );
-        $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
+        $id = $this->delete('id');
+        $status = $this->account_factory->remove_account($id);
+        if ($status) {
+            $message = array('id' => $id, 'message' => 'DELETED!');
+            $this->response($message, 200);
+        } else {
+            $this->response(array('error' => 'Can not delete this account'), 404);
+        }
 
-        $this->response($message, 200); // 200 being the HTTP response code
+    }
+
+    /**
+     * Get account validation result
+     */
+    function validation_get()
+    {
+        //Get information from GET method of Restful standard
+        $info = $this->get();
+
+        //Ask factory to validate account information
+        $status = $this->account_factory->validate($info['acc_name'], $info['password']);
+
+        //Send response to client according to validating result
+        if ($status) {
+            $message = array(
+                'status' => 'account credentials are correct'
+            );
+            $this->response($message, 200);
+        } else {
+            $message = array(
+                'status' => 'account credentials are incorrect'
+            );
+            $this->response($message, 404);
+        }
+    }
+
+
+    function check_permission_get()
+    {
+        //Get information from GET method of Restful standard
+        $info = $this->get();
+
+        //Ask factory to check whether this account be allowed to do this action (permission)
+        $status = $this->restrict_factory->check_access($info['acc_id'], $info['perm_path']);
+
+        //Send response to client according to validating result
+        if ($status) {
+            $message = array(
+                'status' => 'you are allowed to perform this action'
+            );
+            $this->response($message, 200);
+        } else {
+            $message = array(
+                'status' => 'you are forbid to perform this action'
+            );
+            $this->response($message, 404);
+        }
     }
 }

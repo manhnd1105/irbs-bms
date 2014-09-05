@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url'] = 'http://localhost/irbs';
+$config['base_url'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -366,7 +366,7 @@ $config['proxy_ips'] = '';
 |  Native Auto-load
 | -------------------------------------------------------------------
 |
-| Nothing to do with cnfig/autoload.php, this allows PHP autoload to work
+| Nothing to do with config/autoload.php, this allows PHP autoload to work
 | for base controllers and some third-party libraries.
 |
 */
@@ -382,3 +382,9 @@ function __autoload($class)
 }
 
 $config['header_css'] = array('master.css');
+
+//Turn web site on/off
+$config['site_open'] = true;
+
+//Forbid unauthorized users to access features of website (except login)
+$config['restrict_unauthorized'] = false;
