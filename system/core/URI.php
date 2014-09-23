@@ -1,15 +1,15 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php  if (! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
  *
  * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package        CodeIgniter
- * @author        ExpressionEngine Dev Team
- * @copyright    Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @author         ExpressionEngine Dev Team
+ * @copyright      Copyright (c) 2008 - 2011, EllisLab, Inc.
  * @license        http://codeigniter.com/user_guide/license.html
- * @link        http://codeigniter.com
- * @since        Version 1.0
+ * @link           http://codeigniter.com
+ * @since          Version 1.0
  * @filesource
  */
 
@@ -21,10 +21,10 @@
  * Parses URIs and determines routing
  *
  * @package        CodeIgniter
- * @subpackage    Libraries
- * @category    URI
- * @author        ExpressionEngine Dev Team
- * @link        http://codeigniter.com/user_guide/libraries/uri.html
+ * @subpackage     Libraries
+ * @category       URI
+ * @author         ExpressionEngine Dev Team
+ * @link           http://codeigniter.com/user_guide/libraries/uri.html
  */
 class CI_URI
 {
@@ -87,7 +87,8 @@ class CI_URI
     {
         if (strtoupper($this->config->item('uri_protocol')) == 'AUTO') {
             // Is the request coming from the command line?
-            if (php_sapi_name() == 'cli' or defined('STDIN')) {
+//            if (!defined('PHPUNIT_TEST') && (php_sapi_name() == 'cli' or defined('STDIN')))
+            if (! defined('PHPUNIT_TEST') && (php_sapi_name() == 'cli' or defined('STDIN'))) {
                 $this->_set_uri_string($this->_parse_cli_args());
                 return;
             }
@@ -169,7 +170,7 @@ class CI_URI
      */
     private function _detect_uri()
     {
-        if (!isset($_SERVER['REQUEST_URI']) OR !isset($_SERVER['SCRIPT_NAME'])) {
+        if (! isset($_SERVER['REQUEST_URI']) OR ! isset($_SERVER['SCRIPT_NAME'])) {
             return '';
         }
 
@@ -236,7 +237,7 @@ class CI_URI
         if ($str != '' && $this->config->item('permitted_uri_chars') != '' && $this->config->item('enable_query_strings') == FALSE) {
             // preg_quote() in PHP 5.3 escapes -, so the str_replace() and addition of - to preg_quote() is to maintain backwards
             // compatibility as many are unaware of how characters in the permitted_uri_chars will be parsed as a regex pattern
-            if (!preg_match("|^[" . str_replace(array('\\-', '\-'), '-', preg_quote($this->config->item('permitted_uri_chars'), '-')) . "]+$|i", $str)) {
+            if (! preg_match("|^[" . str_replace(array('\\-', '\-'), '-', preg_quote($this->config->item('permitted_uri_chars'), '-')) . "]+$|i", $str)) {
                 show_error('The URI you submitted has disallowed characters.', 400);
             }
         }
@@ -318,7 +319,7 @@ class CI_URI
      */
     function segment($n, $no_result = FALSE)
     {
-        return (!isset($this->segments[$n])) ? $no_result : $this->segments[$n];
+        return (! isset($this->segments[$n])) ? $no_result : $this->segments[$n];
     }
 
     // --------------------------------------------------------------------
@@ -337,7 +338,7 @@ class CI_URI
      */
     function rsegment($n, $no_result = FALSE)
     {
-        return (!isset($this->rsegments[$n])) ? $no_result : $this->rsegments[$n];
+        return (! isset($this->rsegments[$n])) ? $no_result : $this->rsegments[$n];
     }
 
     // --------------------------------------------------------------------
@@ -360,7 +361,7 @@ class CI_URI
      *
      * @access    public
      * @param    integer    the starting segment number
-     * @param    array    an array of default values
+     * @param    array      an array of default values
      * @return    array
      */
     function uri_to_assoc($n = 3, $default = array())
@@ -373,7 +374,7 @@ class CI_URI
      *
      * @access    public
      * @param    integer    the starting segment number
-     * @param    array    an array of default values
+     * @param    array      an array of default values
      * @return    array
      *
      */
@@ -389,8 +390,8 @@ class CI_URI
      *
      * @access    private
      * @param    integer    the starting segment number
-     * @param    array    an array of default values
-     * @param    string    which array we should use
+     * @param    array      an array of default values
+     * @param    string     which array we should use
      * @return    array
      */
     function _uri_to_assoc($n = 3, $default = array(), $which = 'segment')
@@ -403,7 +404,7 @@ class CI_URI
             $segment_array = 'rsegment_array';
         }
 
-        if (!is_numeric($n)) {
+        if (! is_numeric($n)) {
             return $default;
         }
 
@@ -436,12 +437,12 @@ class CI_URI
                 $lastval = $seg;
             }
 
-            $i++;
+            $i ++;
         }
 
         if (count($default) > 0) {
             foreach ($default as $val) {
-                if (!array_key_exists($val, $retval)) {
+                if (! array_key_exists($val, $retval)) {
                     $retval[$val] = FALSE;
                 }
             }

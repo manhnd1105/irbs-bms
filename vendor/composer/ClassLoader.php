@@ -95,13 +95,13 @@ class ClassLoader
      * Registers a set of PSR-0 directories for a given prefix, either
      * appending or prepending to the ones previously set for this prefix.
      *
-     * @param string $prefix The prefix
-     * @param array|string $paths The PSR-0 root directories
-     * @param bool $prepend Whether to prepend the directories
+     * @param string       $prefix  The prefix
+     * @param array|string $paths   The PSR-0 root directories
+     * @param bool         $prepend Whether to prepend the directories
      */
     public function add($prefix, $paths, $prepend = false)
     {
-        if (!$prefix) {
+        if (! $prefix) {
             if ($prepend) {
                 $this->fallbackDirsPsr0 = array_merge(
                     (array)$paths,
@@ -118,7 +118,7 @@ class ClassLoader
         }
 
         $first = $prefix[0];
-        if (!isset($this->prefixesPsr0[$first][$prefix])) {
+        if (! isset($this->prefixesPsr0[$first][$prefix])) {
             $this->prefixesPsr0[$first][$prefix] = (array)$paths;
 
             return;
@@ -140,13 +140,15 @@ class ClassLoader
      * Registers a set of PSR-4 directories for a given namespace, either
      * appending or prepending to the ones previously set for this namespace.
      *
-     * @param string $prefix The prefix/namespace, with trailing '\\'
-     * @param array|string $paths The PSR-0 base directories
-     * @param bool $prepend Whether to prepend the directories
+     * @param string       $prefix  The prefix/namespace, with trailing '\\'
+     * @param array|string $paths   The PSR-0 base directories
+     * @param bool         $prepend Whether to prepend the directories
+     *
+     * @throws \InvalidArgumentException
      */
     public function addPsr4($prefix, $paths, $prepend = false)
     {
-        if (!$prefix) {
+        if (! $prefix) {
             // Register directories for the root namespace.
             if ($prepend) {
                 $this->fallbackDirsPsr4 = array_merge(
@@ -159,7 +161,7 @@ class ClassLoader
                     (array)$paths
                 );
             }
-        } elseif (!isset($this->prefixDirsPsr4[$prefix])) {
+        } elseif (! isset($this->prefixDirsPsr4[$prefix])) {
             // Register directories for a new namespace.
             $length = strlen($prefix);
             if ('\\' !== $prefix[$length - 1]) {
@@ -186,12 +188,12 @@ class ClassLoader
      * Registers a set of PSR-0 directories for a given prefix,
      * replacing any others previously set for this prefix.
      *
-     * @param string $prefix The prefix
-     * @param array|string $paths The PSR-0 base directories
+     * @param string       $prefix The prefix
+     * @param array|string $paths  The PSR-0 base directories
      */
     public function set($prefix, $paths)
     {
-        if (!$prefix) {
+        if (! $prefix) {
             $this->fallbackDirsPsr0 = (array)$paths;
         } else {
             $this->prefixesPsr0[$prefix[0]][$prefix] = (array)$paths;
@@ -202,12 +204,14 @@ class ClassLoader
      * Registers a set of PSR-4 directories for a given namespace,
      * replacing any others previously set for this namespace.
      *
-     * @param string $prefix The prefix/namespace, with trailing '\\'
-     * @param array|string $paths The PSR-4 base directories
+     * @param string       $prefix The prefix/namespace, with trailing '\\'
+     * @param array|string $paths  The PSR-4 base directories
+     *
+     * @throws \InvalidArgumentException
      */
     public function setPsr4($prefix, $paths)
     {
-        if (!$prefix) {
+        if (! $prefix) {
             $this->fallbackDirsPsr4 = (array)$paths;
         } else {
             $length = strlen($prefix);

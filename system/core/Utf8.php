@@ -1,15 +1,15 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php  if (! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
  *
  * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package        CodeIgniter
- * @author        ExpressionEngine Dev Team
- * @copyright    Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @author         ExpressionEngine Dev Team
+ * @copyright      Copyright (c) 2008 - 2011, EllisLab, Inc.
  * @license        http://codeigniter.com/user_guide/license.html
- * @link        http://codeigniter.com
- * @since        Version 2.0
+ * @link           http://codeigniter.com
+ * @since          Version 2.0
  * @filesource
  */
 
@@ -21,10 +21,10 @@
  * Provides support for UTF-8 environments
  *
  * @package        CodeIgniter
- * @subpackage    Libraries
- * @category    UTF-8
- * @author        ExpressionEngine Dev Team
- * @link        http://codeigniter.com/user_guide/libraries/utf8.html
+ * @subpackage     Libraries
+ * @category       UTF-8
+ * @author         ExpressionEngine Dev Team
+ * @link           http://codeigniter.com/user_guide/libraries/utf8.html
  */
 class CI_Utf8
 {
@@ -42,10 +42,20 @@ class CI_Utf8
         global $CFG;
 
         if (
+//            preg_match('/./u', 'é') === 1 // PCRE must support UTF-8
+//            AND function_exists('iconv') // iconv must be installed
+//            AND ini_get('mbstring.func_overload') != 1 // Multibyte string function overloading cannot be enabled
+//            AND (
+//                $CFG->item('charset') == 'UTF-8' // Application charset must be UTF-8
+//            OR (defined('PHPUNIT_TEST') AND PHPUNIT_CHARSET == 'UTF-8')
+//            )
             preg_match('/./u', 'é') === 1 // PCRE must support UTF-8
             AND function_exists('iconv') // iconv must be installed
             AND ini_get('mbstring.func_overload') != 1 // Multibyte string function overloading cannot be enabled
-            AND $CFG->item('charset') == 'UTF-8' // Application charset must be UTF-8
+            AND (
+                (is_object($CFG) AND $CFG->item('charset') == 'UTF-8') // Application charset must be UTF-8
+                OR (defined('PHPUNIT_TEST') AND PHPUNIT_CHARSET == 'UTF-8')
+            )
         ) {
             log_message('debug', "UTF-8 Support Enabled");
 

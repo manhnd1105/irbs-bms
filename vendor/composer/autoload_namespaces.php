@@ -6,11 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'super_classes' => array($baseDir . '/application/libraries'),
-    'jtreminio\\TestExtensions' => array($vendorDir . '/jtreminio/test-extensions/src'),
-    'Symfony\\Component\\Yaml' => array($vendorDir . '/symfony/yaml'),
-    'Symfony\\Component\\Validator' => array($vendorDir . '/symfony/validator'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
-    'Doctrine\\DBAL' => array($vendorDir . '/doctrine/dbal/lib'),
-    'Doctrine\\Common' => array($vendorDir . '/doctrine/common/lib'),
+    'super_classes'              => array($baseDir . '/application/libraries'),
+    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'PhpRbac'                    => array($vendorDir . '/owasp/phprbac/PhpRbac/src'),
+    'Doctrine\\Instantiator\\'   => array($vendorDir . '/doctrine/instantiator/src'),
 );
