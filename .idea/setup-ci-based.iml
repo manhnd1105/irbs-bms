@@ -8,9 +8,11 @@
       <library name="PHARS">
         <CLASSES>
           <root url="phar://$MODULE_DIR$/composer.phar" />
+          <root url="phar://$MODULE_DIR$/vendor/owasp/phprbac/PhpRbac/tests/phpunit.phar" />
         </CLASSES>
         <SOURCES>
           <root url="phar://$MODULE_DIR$/composer.phar" />
+          <root url="phar://$MODULE_DIR$/vendor/owasp/phprbac/PhpRbac/tests/phpunit.phar" />
         </SOURCES>
       </library>
     </orderEntry>
