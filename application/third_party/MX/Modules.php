@@ -5,9 +5,16 @@
 global $CFG;
 
 /* get module locations from config settings or use the default module location and offset */
-is_array(Modules::$locations = $CFG->item('modules_locations')) OR Modules::$locations = array(
-    APPPATH . 'modules/' => '../modules/',
-);
+if (! defined('PHPUNIT_TEST')) {
+    is_array(Modules::$locations = $CFG->item('modules_locations')) OR Modules::$locations = array(
+        APPPATH . 'modules/' => '../modules/',
+    );
+} else {
+    Modules::$locations = array(
+        APPPATH . 'modules/' => '../modules/',
+    );
+}
+
 
 /* PHP5 spl_autoload */
 spl_autoload_register('Modules::autoload');
@@ -16,7 +23,7 @@ spl_autoload_register('Modules::autoload');
  * Modular Extensions - HMVC
  *
  * Adapted from the CodeIgniter Core Classes
- * @link    http://codeigniter.com
+ * @link         http://codeigniter.com
  *
  * Description:
  * This library provides functions to load and instantiate controllers
@@ -25,7 +32,7 @@ spl_autoload_register('Modules::autoload');
  * Install this file as application/third_party/MX/Modules.php
  *
  * @copyright    Copyright (c) 2011 Wiredesignz
- * @version    5.4
+ * @version      5.4
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -87,7 +94,7 @@ class Modules
         $alias = strtolower(basename($module));
 
         /* create or return an existing controller from the registry */
-        if (!isset(self::$registry[$alias])) {
+        if (! isset(self::$registry[$alias])) {
 
             /* find the controller */
             list($class) = CI::$APP->router->locate(explode('/', $module));
@@ -154,7 +161,7 @@ class Modules
             /* load config or language array */
             include $location;
 
-            if (!isset($$type) OR !is_array($$type))
+            if (! isset($$type) OR ! is_array($$type))
                 show_error("{$location} does not contain a valid {$type} array");
 
             $result = $$type;
@@ -180,7 +187,7 @@ class Modules
         $path = ltrim(implode('/', $segments) . '/', '/');
         $module ? $modules[$module] = $path : $modules = array();
 
-        if (!empty($segments)) {
+        if (! empty($segments)) {
             $modules[array_shift($segments)] = ltrim(implode('/', $segments) . '/', '/');
         }
 
@@ -203,12 +210,12 @@ class Modules
     {
 
         /* load the route file */
-        if (!isset(self::$routes[$module])) {
+        if (! isset(self::$routes[$module])) {
             if (list($path) = self::find('routes', $module, 'config/') AND $path)
                 self::$routes[$module] = self::load_file('routes', $path, 'route');
         }
 
-        if (!isset(self::$routes[$module])) return;
+        if (! isset(self::$routes[$module])) return;
 
         /* parse module routes */
         foreach (self::$routes[$module] as $key => $val) {
