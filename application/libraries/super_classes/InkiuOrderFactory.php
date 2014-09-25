@@ -76,6 +76,10 @@ final class InkiuOrderFactory implements ISingleton
         return $order;
     }
 
+    /**
+     * @param $info
+     * @return bool
+     */
     public static function create_order($info)
     {
         //Create an object with above information
@@ -85,17 +89,29 @@ final class InkiuOrderFactory implements ISingleton
         return self::map_db($order);
     }
 
+    /**
+     * @param $info
+     * @return bool
+     */
     public static function update_order($info)
     {
         //Do the same steps as create_oder()
         return self::create_order($info);
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public static function delete_order($id)
     {
         return \Model_order::delete_order($id);
     }
 
+    /**
+     * @param $ids
+     * @return bool
+     */
     public static function delete_orders($ids)
     {
         return \Model_order::delete_orders($ids);
@@ -136,13 +152,29 @@ final class InkiuOrderFactory implements ISingleton
         return true;
     }
 
+    /**
+     * @param $info
+     * @return bool
+     */
     private static function map_db_has_id($info)
     {
         return \Model_order::edit_order($info);
     }
 
+    /**
+     * @param $info
+     * @return mixed
+     */
     private static function map_db_has_no_id($info)
     {
         return \Model_order::insert_order($info);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function load_orders()
+    {
+        return \Model_order::get_order();
     }
 }
