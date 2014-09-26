@@ -38,7 +38,7 @@ class Order_controller extends Frontend_Controller
 // 		BEGIN: Map changes to db
         $this->order_factory->map_db($order_obj);
 // 		END: Map changes to db
-        $this->view_crud();
+        $this->index();
     }
 
     /**
@@ -65,7 +65,7 @@ class Order_controller extends Frontend_Controller
     public function delete($order_id)
     {
         $this->order_factory->remove_orders($order_id);
-        $this->view_crud();
+        $this->index();
     }
 
     /**
@@ -85,18 +85,14 @@ class Order_controller extends Frontend_Controller
     /**
      *
      */
-    public function view_crud()
+    public function index()
     {
 // 		BEGIN: Get all orders information for displaying
-        $orders_obj = $this->order_factory->load_orders();
-        $orders_info = array();
-        foreach ($orders_obj as $order_obj) {
-            $orders_info[] = $order_obj->get_props();
-        }
+        $info = $this->order_factory->load_orders_info();
 // 		END: Get all orders information for displaying
 
 // 		BEGIN: Load view with above data
-        $data['info'] = $orders_info;
+        $data['info'] = $info;
         $this->load->module('template/template_controller');
         $this->template_controller->demo_template('order', '/order_crud', $data);
 // 		END: Load view with above data

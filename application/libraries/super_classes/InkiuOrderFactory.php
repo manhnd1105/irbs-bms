@@ -175,6 +175,17 @@ final class InkiuOrderFactory implements ISingleton
      */
     public function load_orders()
     {
+        $orders = $this->load_orders_info();
+        $result = array();
+        foreach ($orders as $row)
+        {
+            $result[] = $this->create_order_obj($row);
+        }
+        return $result;
+    }
+
+    public function load_orders_info()
+    {
         return \Model_order::get_order();
     }
 }
