@@ -115,4 +115,22 @@ class Order_controller extends Frontend_Controller
         $this->load->module('template/template_controller');
         $this->template_controller->demo_template('order', '/order_update', $data);
     }
+
+    public function view_progress()
+    {
+        $this->load->module('template/template_controller');
+        $this->template_controller->demo_template('order', '/order_progress');
+    }
+
+    public function view_payment()
+    {
+        $this->load->module('template/template_controller');
+        $this->template_controller->demo_template('order', '/payment');
+    }
+
+    public function view_add_payment()
+    {
+        $this->load->module('template/template_controller');
+        $this->template_controller->demo_template('order', '/add_payment');
+    }
 }

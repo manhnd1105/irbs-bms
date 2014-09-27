@@ -46,3 +46,18 @@
 
     ?>
 </div>
+<?php
+//echo '<div class="row">';
+//echo '<div  class="col-sm-4">';
+//echo '   <ul class="">';
+//echo '  <li class="active"><a href="#">Dashboard</a></li>';
+//echo '<li>' . anchor('', 'Make order') . '</li>';
+//echo '<li>' . anchor('', 'Trade orders') . '</li>';
+//echo '<li>' . anchor('', 'Payment') . '</li>';
+//echo ' </ul>';
+//echo '</div >';
+//echo '<div  class="col-sm-8">';
+//
+//echo '</div >';
+//echo '</div >';
+

@@ -5,8 +5,12 @@
  * Date: 8/29/14
  * Time: 2:56 PM
  */
-echo 'This is side menu';
-//echo '<p>' . anchor('account/account_controller', 'Manage Inkiu accounts') . '</p>';
+
+echo '<p>' . anchor('order/order_controller/index', 'Manage Order') . '</p>';
+echo '<p>' . anchor('order/order_controller/view_create', 'Create Order') . '</p>';
+echo '<p>' . anchor('order/order_controller/view_progress', 'Progress') . '</p>';
+echo '<p>' . anchor('order/order_controller/view_payment', 'Payment') . '</p>';
+echo '<p>' . anchor('order/order_controller/view_add_payment', 'Add Payment') . '</p>';
 //echo '<p>' . anchor('account/account_controller/view_create', 'Create Inkiu account') . '</p>';
 //echo '<p>' . anchor('authentication/authentication_controller/', 'Authentication') . '</p>';
 //echo '<p>' . anchor('rbac/perm_controller/', 'Manage permissions') . '</p>';
