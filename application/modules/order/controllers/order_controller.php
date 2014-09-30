@@ -145,4 +145,41 @@ class Order_controller extends Frontend_Controller
         $this->load->module('template/template_controller');
         $this->template_controller->demo_template('order', '/order_tracking');
     }
+
+    //create view upload
+    public function view_upload(){
+        $data['controller'] = 'order_controller';
+        $data['action'] = 'upload';
+        $data['module'] = 'order';
+
+        $this->load->module('template/template_controller');
+        $this->template_controller->demo_template('order', '/upload',$data);
+    }
+
+    //upload image file
+    public function upload(){
+        if (isset($_POST['submit'])) {
+            if (!empty($_FILES['upload']['name'])) {
+                $ch = curl_init();
+                $localfile = $_FILES['upload']['tmp_name'];
+                $fp = fopen($localfile, 'r');
+                curl_setopt($ch, CURLOPT_URL, 'ftp://ftp_login:password@ftp.domain.com/'.$_FILES['upload']['name']);
+                curl_setopt($ch, CURLOPT_UPLOAD, 1);
+                curl_setopt($ch, CURLOPT_INFILE, $fp);
+                curl_setopt($ch, CURLOPT_INFILESIZE, filesize($localfile));
+                curl_exec ($ch);
+                $error_no = curl_errno($ch);
+                curl_close ($ch);
+                if ($error_no == 0) {
+                    $error = 'File uploaded succesfully.';
+                } else {
+                    $error = 'File upload error.';
+                }
+            } else {
+                $error = 'Please select a file.';
+            }
+        }
+    }
+
+
 }
