@@ -3,6 +3,7 @@
 /** @var $controller string */
 /** @var $action string */
 
+
 echo form_open($module . '/' . $controller . '/' . $action);
 echo form_fieldset('Upload picture');
 

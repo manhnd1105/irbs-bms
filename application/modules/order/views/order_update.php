@@ -8,17 +8,17 @@ echo form_fieldset('Information');
 echo form_hidden('id', $order_info['id']);
 
 
-echo '<div class="form-group">';
+echo '<div class="form-group-sm">';
 echo form_label('Order description');
 echo form_input('description', $order_info['description']);
 echo form_error('description');
 echo '</div>';
-echo '<div class="form-group">';
+echo '<div class="form-group-sm">';
 echo form_label('Creation date');
 echo form_input('creation_date', $order_info['creation_date']);
 echo form_error('creation_date');
 echo '</div>';
-echo '<div class="form-group">';
+echo '<div class="form-group-sm">';
 echo form_label('Creator');
 echo form_input('creator', $order_info['creator']);
 echo form_error('creator');
