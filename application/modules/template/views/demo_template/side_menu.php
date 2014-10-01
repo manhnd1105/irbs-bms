@@ -12,7 +12,7 @@ echo '<p>' . anchor('order/order_controller/view_progress', 'Progress') . '</p>'
 echo '<p>' . anchor('order/order_controller/view_payment', 'Payment') . '</p>';
 echo '<p>' . anchor('order/order_controller/view_crud_custom', 'Order Custom View') . '</p>';
 echo '<p>' . anchor('order/order_controller/view_order_tracking', 'Order Tracking') . '</p>';
-echo '<p>' . anchor('order/order_controller/view_upload', 'Upload File') . '</p>';
+echo '<p>' . anchor('order/upload_controller/view_upload', 'Upload File') . '</p>';
 //echo '<p>' . anchor('account/account_controller/view_create', 'Create Inkiu account') . '</p>';
 //echo '<p>' . anchor('authentication/authentication_controller/', 'Authentication') . '</p>';
 //echo '<p>' . anchor('rbac/perm_controller/', 'Manage permissions') . '</p>';
