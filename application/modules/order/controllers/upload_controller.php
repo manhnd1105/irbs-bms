@@ -51,22 +51,30 @@ class Upload_controller extends Frontend_Controller{
 //        }
 
 
-        $url = 'http://localhost/ajaximageupload/uploaded_file.php';
+        //$url = 'http://localhost/ajaximageupload/uploaded_file.php';
+        $url = 'http://localhost/irbs-fms/index.php/file/image_controller/view_crud';
         set_time_limit(0);
         if (isset($_FILES['upload']))
         {
             $tmpfile = $_FILES['upload']['tmp_name'];
-            $filename = basename($_FILES['upload']['name']);
+            //$filename = basename($_FILES['upload']['name']);
             $type = basename($_FILES['upload']['type']);
             $data = array(
-                'uploaded_file' => '@'.$tmpfile.';filename='.$filename.';type='.$type,
+                //'uploaded_file' => '@'.$tmpfile.';filename='.$filename.';type='.$type,
+                'uploaded_file' => '@'.$tmpfile,
             );
+            $build_data = http_build_query($data, NULL, '&');
+            //print $build_data;
+            $ch = $this->Curl->post($data,array());
+//            curl_setopt($ch,CURLOPT_CUSTOMREQUEST,'POST');
+//            curl_setopt($ch, CURLOPT_POST, true);
+//            curl_setopt($ch, CURLOPT_POSTFIELDS, $build_data);
 
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             //curl_setopt($ch, CURLOPT_FILE, $data);
-            curl_exec($ch);
-            curl_close($ch);
+            $ch->post($data,array());
+//            curl_exec($ch);
+//            curl_close($ch);
+
         }
 
 //        $localFile = $_FILES['upload']['tmp_name'];
@@ -76,24 +84,26 @@ class Upload_controller extends Frontend_Controller{
 //// Connecting to website.
 //        $ch = curl_init();
 //
-//        curl_setopt($ch, CURLOPT_USERPWD, "email@email.org:password");
-//        curl_setopt($ch, CURLOPT_URL, 'ftp://@ftp.website.net/audio/' . $_FILES['upload']['name']);
+////        curl_setopt($ch, CURLOPT_USERPWD, "email@email.org:password");
+////        curl_setopt($ch, CURLOPT_URL, 'ftp://@ftp.website.net/audio/' . $_FILES['upload']['name']);
+//        curl_setopt($ch, CURLOPT_URL, 'http://localhost/ajaximageupload/uploaded_file.php'. $_FILES['upload']['name']);
 //        curl_setopt($ch, CURLOPT_UPLOAD, 1);
 //        curl_setopt($ch, CURLOPT_TIMEOUT, 86400); // 1 Day Timeout
 //        curl_setopt($ch, CURLOPT_INFILE, $fp);
-//        curl_setopt($ch, CURLOPT_NOPROGRESS, false);
-//        curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, 'CURL_callback');
+//        //curl_setopt($ch, CURLOPT_NOPROGRESS, false);
+//        //curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, 'CURL_callback');
 //        curl_setopt($ch, CURLOPT_BUFFERSIZE, 128);
 //        curl_setopt($ch, CURLOPT_INFILESIZE, filesize($localFile));
+//        curl_setopt($ch, CURLOPT_POST, true);
 //        curl_exec ($ch);
-//
+
 //        if (curl_errno($ch)) {
 //
 //            $msg = curl_error($ch);
 //        }
 //        else {
 //
-//            $msg = 'File uploaded successfully.';
+//            $msg = 'File uploaded successfully fafsfds.';
 //        }
 //
 //        curl_close ($ch);
@@ -101,7 +111,7 @@ class Upload_controller extends Frontend_Controller{
 //        $return = array('msg' => $msg);
 //
 //        echo json_encode($return);
-//
-    }
+
+   }
 
 }
