@@ -1,7 +1,11 @@
 <?php
+
+
+
 /** @var $module string */
 /** @var $controller string */
 /** @var $action string */
+
 
 echo form_open($module . '/' . $controller . '/' . $action);
 echo form_fieldset('Upload picture');
@@ -25,10 +29,14 @@ echo '</table>';
 
 echo '</div>';
 //echo form_button('','Add file',"class='btn btn-success'");
-echo ' <input type="file" id="" >';
+
+echo '<input id="file" type="file" name="file[]" multiple="multiple" />';
 echo ' ';
 echo '<div>&nbsp;</div>';
-echo form_button('', 'Start upload', "class='btn btn-success'");
+echo '<button class="btn btn-danger btn-sm" type="submit" id="submit">
+          <i class="glyphicon glyphicon-upload"></i> Upload
+      </button>';
+//echo form_button("upload", '<i class="glyphicon glyphicon-upload"></i> Upload', "class='btn btn-success' id='upload'");
 echo '<br/>';
 //echo '<div class="form-group">';
 //echo form_label('Order description');

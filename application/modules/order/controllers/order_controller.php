@@ -121,4 +121,19 @@ class Order_controller extends Frontend_Controller
     {
         $this->render('order', '/add_payment');
     }
+
+    public function view_crud_custom()
+    {
+        $this->load->module('template/template_controller');
+        $this->template_controller->demo_template('order', '/order_crud_custom_view');
+    }
+
+    public function view_order_tracking()
+    {
+        $this->load->module('template/template_controller');
+        $this->template_controller->demo_template('order', '/order_tracking');
+    }
+
+
+
 }

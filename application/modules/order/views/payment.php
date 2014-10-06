@@ -5,7 +5,10 @@
  * Date: 9/27/2014
  * Time: 8:46 AM
  */
+echo '<div class="row">';
 
+
+echo '<div  class="col-sm-12">';
 echo form_fieldset('Payment');
 echo form_button('', 'Add payment method', "class='btn btn-success'");
 echo '<div>&nbsp;</div>';
@@ -40,5 +43,10 @@ echo '</tr>';
 
 echo '</table>';
 
+echo '</div>';
+
+echo '</div >';
+echo '<div  class="col-sm-2">';
+echo '</div >';
 echo '</div>';
 echo form_fieldset_close();
