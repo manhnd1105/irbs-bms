@@ -32,9 +32,6 @@ class Order_controller extends Frontend_Controller
 
  		//Ask factory to create obj
         $status = $this->order_factory->create_order($post);
-
-//        $this->order_factory->map_db($order_obj);
-//        $this->index();
     }
 
     /**
@@ -47,6 +44,8 @@ class Order_controller extends Frontend_Controller
 
  		//Ask factory to load obj
         $status = $this->order_factory->load_orders($post['order_id']);
+
+        $this->index();
     }
 
     /**
@@ -55,7 +54,7 @@ class Order_controller extends Frontend_Controller
     public function delete($order_id)
     {
         //Ask factory to perform delete orders
-        $this->order_factory->remove_orders($order_id);
+        $status = $this->order_factory->remove_orders($order_id);
         $this->index();
     }
 
@@ -121,4 +120,17 @@ class Order_controller extends Frontend_Controller
     {
         $this->render('order', '/add_payment');
     }
+
+    public function view_crud_custom()
+    {
+        $this->template_controller->demo_template('order', '/order_crud_custom_view');
+    }
+
+    public function view_order_tracking()
+    {
+        $this->template_controller->demo_template('order', '/order_tracking');
+    }
+
+
+
 }

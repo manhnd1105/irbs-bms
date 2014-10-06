@@ -1,18 +1,12 @@
 <?php $this->load->view('header'); ?>
-    <div class="Table">
-        <div class='Row'>
-            <div class="Cell">
-                <?php $this->load->view('banner'); ?>
-            </div>
-            <div class="Cell">
-                <?php $this->load->view('main_menu'); ?>
-            </div>
-        </div>
-        <div class='Row'>
-            <div class='Cell'>
+<?php //$this->load->view('banner'); ?>
+<?php //$this->load->view('main_menu'); ?>
+    <div class='container-fluid'>
+        <div class="row">
+            <div class='col-sm-3 col-md-2 sidebar'>
                 <?php $this->load->view('side_menu'); ?>
             </div>
-            <div class='Cell'>
+            <div class='col-sm-9 col-md-10'>
                 <div id="event_result"></div>
                 <?php
                 /** @var string $module_name name of module need to load */
@@ -21,6 +15,5 @@
                 ?>
             </div>
         </div>
-
     </div>
 <?php $this->load->view('footer'); ?>

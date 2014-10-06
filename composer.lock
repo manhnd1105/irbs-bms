@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c201afab6779e92b25ad2953bdd4c258",
+    "hash": "cb838d62a216cd00998512d63b5d3c5f",
     "packages": [
         {
             "name": "owasp/phprbac",
@@ -860,12 +860,18 @@
             "time": "2014-09-22 11:59:59"
         }
     ],
-    "aliases": [],
+    "aliases": [
+
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "owasp/phprbac": 20
     },
     "prefer-stable": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
 }
