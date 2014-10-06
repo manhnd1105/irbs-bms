@@ -3,6 +3,7 @@
 /**
  * Class Order_controller
  * @property super_classes\InkiuOrderFactory order_factory
+ * @property Template_controller template_controller
  */
 class Order_controller extends Frontend_Controller
 {
@@ -27,18 +28,13 @@ class Order_controller extends Frontend_Controller
      */
     public function create()
     {
-// 		BEGIN: Get all POST information
         $post = $this->input->post();
-// 		END: Get all POST information
 
-// 		BEGIN: Ask factory to create obj
-        $order_obj = $this->order_factory->create_order($post);
-// 		END: Ask factory to create obj
+ 		//Ask factory to create obj
+        $status = $this->order_factory->create_order($post);
 
-// 		BEGIN: Map changes to db
-        $this->order_factory->map_db($order_obj);
-// 		END: Map changes to db
-        $this->index();
+//        $this->order_factory->map_db($order_obj);
+//        $this->index();
     }
 
     /**
@@ -46,17 +42,11 @@ class Order_controller extends Frontend_Controller
      */
     public function update()
     {
-// 		BEGIN: Get all POST information
+        //Get information from POST
         $post = $this->input->post();
-// 		END: Get all POST information
 
-// 		BEGIN: Ask factory to load obj
-        $order_obj = $this->order_factory->load_orders($post['order_id']);
-// 		END: Ask factory to load obj
-
-// 		BEGIN: Map changes to db
-        $this->order_factory->map_db($order_obj);
-// 		END: Map changes to db
+ 		//Ask factory to load obj
+        $status = $this->order_factory->load_orders($post['order_id']);
     }
 
     /**
@@ -64,6 +54,7 @@ class Order_controller extends Frontend_Controller
      */
     public function delete($order_id)
     {
+        //Ask factory to perform delete orders
         $this->order_factory->remove_orders($order_id);
         $this->index();
     }
@@ -73,13 +64,17 @@ class Order_controller extends Frontend_Controller
      */
     public function view_create()
     {
-// 		BEGIN: Load view
+        //Ask view to render data
         $data['controller'] = 'order_controller';
         $data['action'] = 'create';
         $data['module'] = 'order';
 
-        $this->template_controller->demo_template('order', '/order_create', $data);
-// 		END: Load view
+        $this->render('order', '/order_create', $data);
+    }
+
+    private function render($module, $method, $data = NULL)
+    {
+        $this->template_controller->demo_template($module, $method, $data);
     }
 
     /**
@@ -87,15 +82,12 @@ class Order_controller extends Frontend_Controller
      */
     public function index()
     {
-// 		BEGIN: Get all orders information for displaying
+ 		//Get all orders information for displaying
         $info = $this->order_factory->load_orders_info();
-// 		END: Get all orders information for displaying
 
-// 		BEGIN: Load view with above data
+        //Ask view to render with obtained data
         $data['info'] = $info;
-        $this->load->module('template/template_controller');
-        $this->template_controller->demo_template('order', '/order_crud', $data);
-// 		END: Load view with above data
+        $this->render('order', '/index', $data);
     }
 
     /**
@@ -103,34 +95,30 @@ class Order_controller extends Frontend_Controller
      */
     public function view_update($order_id)
     {
-      //Get all saved information according to this account id
-        $order = $this->order_factory->load_orders($order_id);
-        $order_info = $order->get_props();
+        //Get all saved information according to this account id
+        $info = $this->order_factory->load_orders_info($order_id);
 
         //Load view with above data
-        $data['order_info'] = $order_info;
+        $data['order_info'] = $info;
         $data['controller'] = 'order_controller';
         $data['action'] = 'create';
         $data['module'] = 'order';
-        $this->load->module('template/template_controller');
-        $this->template_controller->demo_template('order', '/order_update', $data);
+
+        $this->render('order', '/order_update', $data);
     }
 
     public function view_progress()
     {
-        $this->load->module('template/template_controller');
-        $this->template_controller->demo_template('order', '/order_progress');
+        $this->render('order', '/order_progress');
     }
 
     public function view_payment()
     {
-        $this->load->module('template/template_controller');
-        $this->template_controller->demo_template('order', '/payment');
+        $this->render('order', '/payment');
     }
 
     public function view_add_payment()
     {
-        $this->load->module('template/template_controller');
-        $this->template_controller->demo_template('order', '/add_payment');
+        $this->render('order', '/add_payment');
     }
 }

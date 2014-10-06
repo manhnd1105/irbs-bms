@@ -1,10 +1,10 @@
 <div class="Table">
     <div class="Heading">
         <div class="Cell">
-            <p>Description</p>
+            <p>ID</p>
         </div>
         <div class="Cell">
-            <p>Creation date</p>
+            <p>Description</p>
         </div>
         <div class="Cell">
             <p>Creator</p>
@@ -35,9 +35,6 @@
         echo "</div>";
         echo "<div class='Cell'>";
         echo anchor('order/order_controller/delete/' . $order_id, 'Remove');
-        echo "</div>";
-        echo "<div class='Cell'>";
-        echo anchor('order/order_controller/view_create', 'Create');
         echo "</div>";
         /* End of a row */
         echo '</div>';
