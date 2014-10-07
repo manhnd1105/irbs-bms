@@ -3,79 +3,48 @@
  */
 
 $(document).ready(function(){
-    //$("#files").on('submit',(function(e) {
-    //    e.preventDefault();
-    //    var  data = new FormData(this);
-    //    //var images = $('#upload').files;
-    //    //for(var i = 0; i <images.length; i++){
-    //    //    data.append('upload',images.file[i]);
-    //    //}
-    //    $.ajax({
-    //        'url': "http://localhost/php_ajax_image_upload/upload.php",
-    //        'data': data,
-    //        'contentType': false,
-    //        'cache': false,
-    //        'processData':false,
-    //        'success': function(data)
-    //        {
-    //            $("#uploaded").html(data);
-    //        },
-    //        'error': function()
-    //        {
-    //            $("#uploaded").html("error ===========");
-    //        }
-    //    });
-    //
-    //}));
-    var formdata = false;
 
+    var formdata = false;
 
     if(window.FormData){
         formdata = new FormData();
     }
 
-    function showUploadItem(source, file){
-        var tbody = document.getElementById('items_upload');
-        //var th = document.createElement('thead');
-        //var th_row = document.createElement('row');
-        //
-        //
-        //var header = table.createTHead();
-        //var theader = header.insertRow();
-        //var item_no = theader.insertCell(0);
-        //item_no.innerHTML = '<p class="text-center">#</p>';
-        //var item_src = theader.insertCell(1);
-        //item_src.innerHTML = '<p class="text-center"><i class="fa fa-image"></i></p>';
-        //var item_name = theader.insertCell(2);
-        //item_name.innerHTML = '<p class="text-center">Name</p>';
-        //var item_type = theader.insertCell(3);
-        //item_type.innerHTML = '<p class="text-center">Type</p>';
-        //var item_size = theader.insertCell(4);
-        //item_size.innerHTML = '<p class="text-center">Size</p>';
-        //var action = theader.insertCell(5);
-        //action.innerHTML = '<p class="text-center">Action</p>';
+    function showUploadImage(source){
+        var images = document.getElementById('upload_image');
+        images.innerHTML += '<div class="col-xs-4 col-md-2"><a href="#" class="thumbnail">'+
+        '<img src="'+source+'"/>'+
+        '</a></div>';
+        //row.insertCell(1).innerHTML = '<p class="text-center"><img src="'+source+'" class="img-thumbnail" width = "90px;" height ="90px;"/></p>';
+    }
+    function showFileInfo(file,index){
+        var table = document.getElementById('upload_info');
+        var row = table.insertRow();
+        row.insertCell(0).innerHTML = '<p class="text-center">'+index+'</p>';
+        row.insertCell(1).innerHTML = '<p class="text-center">'+file.name+'</p>';
+        row.insertCell(2).innerHTML = '<p class="text-center">'+file.size+'</p>';
 
-        var row = tbody.insertRow();
-        row.insertCell(0).innerHTML = 1;
-        row.insertCell(1).innerHTML = '<p class="text-center"><img src="'+source+'" class="img-thumbnail" width = "90px;" height ="90px;"/></p>';
-        row.insertCell(2).innerHTML = '<p class="text-center">'+file.name+'</p>';
-        row.insertCell(3).innerHTML = '<p class="text-center">'+file.type+'</p>';
-        row.insertCell(4).innerHTML = '<p class="text-center">'+file.size+'</p>';
-        row.insertCell(5).innerHTML = '<p class="text-center">'+'action'+'</p>';
+        row.insertCell(3).innerHTML = '<div class="progress progress-striped active">'+
+        '<div class="progress-bar progress-bar-info"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">'+
+        '<span class="sr-only">0%</span>'+
+        '</div>' +
+        '</div>';
+        row.insertCell(4).innerHTML = '<p class="text-center"><a class="btn btn-outline btn-warning btn-sm"><i class="fa fa-times"></i></a></p>';
     }
 
-
+    // show information file upload
     $('#files').on('change',(function(event){
         event.preventDefault();
-
-        var i = 0, reader, file;
+        var i = 0, reader;
         for( ; i< this.files.length; i++){
-            file = this.files[i];
+            var file = this.files[i];
             if(file.type.match(/image.*/)){
+                var index = i+1;
+                showFileInfo(file,index);
                 if(window.FileReader){
                     reader = new FileReader();
                     reader.onloadend = function(e){
-                        showUploadItem(e.target.result,file);
+                        showUploadImage(e.target.result);
                     };
                     reader.readAsDataURL(file);
                 }
@@ -84,7 +53,28 @@ $(document).ready(function(){
                 }
             }
         }
-
     }));
+
+    //upload file to server
+    $('#submit').on('click',function(event){
+        event.preventDefault();
+        $.ajax({
+            url: 'http://localhost/irbs-bms/index.php/order/upload_controller/upload',
+            type: "POST",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                alert(res);
+            },
+            error: function()
+            {
+                alert('error');
+            }
+
+        });
+
+    });
+
 });
 

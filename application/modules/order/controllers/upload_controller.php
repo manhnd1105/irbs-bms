@@ -36,6 +36,7 @@ class Upload_controller extends Frontend_Controller{
 
     //upload image file
     public function upload(){
+        echo'dsdadasdadsa';
 //        if (isset($_POST['submit'])) {
 //            if (!empty($_FILES['upload']['name'])) {
 //                $ch = curl_init();
@@ -61,32 +62,34 @@ class Upload_controller extends Frontend_Controller{
 //            }
 //        }
 
-
+//=====================================================================
         //$url = 'http://localhost/ajaximageupload/uploaded_file.php';
-        $url = 'http://localhost/irbs-fms/index.php/file/image_controller/view_crud';
-        set_time_limit(0);
-        if (isset($_FILES['upload']))
-        {
-            $tmpfile = $_FILES['upload']['tmp_name'];
-            //$filename = basename($_FILES['upload']['name']);
-            $type = basename($_FILES['upload']['type']);
-            $data = array(
-                //'uploaded_file' => '@'.$tmpfile.';filename='.$filename.';type='.$type,
-                'uploaded_file' => '@'.$tmpfile,
-            );
-            $build_data = http_build_query($data, NULL, '&');
-            //print $build_data;
-            $ch = $this->Curl->post($data,array());
-//            curl_setopt($ch,CURLOPT_CUSTOMREQUEST,'POST');
-//            curl_setopt($ch, CURLOPT_POST, true);
-//            curl_setopt($ch, CURLOPT_POSTFIELDS, $build_data);
+//        $url = 'http://localhost/irbs-fms/index.php/file/image_controller/view_crud';
+//        set_time_limit(0);
+//        if (isset($_FILES['upload']))
+//        {
+//            $tmpfile = $_FILES['upload']['tmp_name'];
+//            //$filename = basename($_FILES['upload']['name']);
+//            $type = basename($_FILES['upload']['type']);
+//            $data = array(
+//                //'uploaded_file' => '@'.$tmpfile.';filename='.$filename.';type='.$type,
+//                'uploaded_file' => '@'.$tmpfile,
+//            );
+//            $build_data = http_build_query($data, NULL, '&');
+//            //print $build_data;
+//            $ch = $this->Curl->post($data,array());
+////            curl_setopt($ch,CURLOPT_CUSTOMREQUEST,'POST');
+////            curl_setopt($ch, CURLOPT_POST, true);
+////            curl_setopt($ch, CURLOPT_POSTFIELDS, $build_data);
+//
+//            //curl_setopt($ch, CURLOPT_FILE, $data);
+//            $ch->post($data,array());
+////            curl_exec($ch);
+////            curl_close($ch);
+//
+//        }
 
-            //curl_setopt($ch, CURLOPT_FILE, $data);
-            $ch->post($data,array());
-//            curl_exec($ch);
-//            curl_close($ch);
-
-        }
+//=====================================================================
 
 //        $localFile = $_FILES['upload']['tmp_name'];
 //
