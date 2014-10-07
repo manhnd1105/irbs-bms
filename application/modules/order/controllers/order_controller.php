@@ -55,7 +55,7 @@ class Order_controller extends Frontend_Controller
     public function delete($order_id)
     {
         //Ask factory to perform delete orders
-        $this->order_factory->remove_orders($order_id);
+        $status = $this->order_factory->delete_order($order_id);
         $this->index();
     }
 
@@ -72,6 +72,11 @@ class Order_controller extends Frontend_Controller
         $this->render('order', '/order_create', $data);
     }
 
+    /**
+     * @param      $module
+     * @param      $method
+     * @param null $data
+     */
     private function render($module, $method, $data = NULL)
     {
         $this->template_controller->demo_template($module, $method, $data);
@@ -83,11 +88,11 @@ class Order_controller extends Frontend_Controller
     public function index()
     {
  		//Get all orders information for displaying
-        $info = $this->order_factory->load_orders_info();
+//        $info = $this->order_factory->load_orders_info();
 
         //Ask view to render with obtained data
-        $data['info'] = $info;
-        $this->render('order', '/index', $data);
+//        $data['info'] = $info;
+        $this->render('order', '/index');
     }
 
     /**
@@ -107,27 +112,81 @@ class Order_controller extends Frontend_Controller
         $this->render('order', '/order_update', $data);
     }
 
+    /**
+     *
+     */
+    public function filter()
+    {
+        //Get information from POST
+        $post = $this->input->post();
+
+        //Ask factory to perform filter data
+        //If has info from POST => Load filtered data
+        if ($post !== null)
+        {
+            $info = $this->order_factory->filter($post);
+        }
+        //If has no info from POST => Load all orders data
+        else
+        {
+            $info = $this->order_factory->load_orders_info();
+        }
+
+        //Transform data to html format for displaying as a partial view
+        $html = '';
+        if (is_array($info)) {
+            foreach ($info as $row) {
+                $html .= '<tr>';
+                $html .= '<td >' . $row['id'] . '</td>';
+                $html .= '<td >' . $row['description'] . '</td>';
+                $html .= '<td>' . $row['creation_date'] . '</td>';
+                $html .= '<td>' . $row['creator'] . '</td>';
+                $html .= '<td>' . anchor('order/order_controller/view_create', 'Create');
+                $html .= anchor('order/order_controller/view_update/' . $row['id'], 'Edit');
+                $html .= anchor('order/order_controller/delete/' . $row['id'], 'Remove') . '</td>';
+                $html .= '</tr>';
+            }
+        }
+        //Return filtered information to view
+        print($html);
+    }
+
+    /**
+     *
+     */
     public function view_progress()
     {
         $this->render('order', '/order_progress');
     }
 
+    /**
+     *
+     */
     public function view_payment()
     {
         $this->render('order', '/payment');
     }
 
+    /**
+     *
+     */
     public function view_add_payment()
     {
         $this->render('order', '/add_payment');
     }
 
+    /**
+     *
+     */
     public function view_crud_custom()
     {
         $this->load->module('template/template_controller');
         $this->template_controller->demo_template('order', '/order_crud_custom_view');
     }
 
+    /**
+     *
+     */
     public function view_order_tracking()
     {
         $this->load->module('template/template_controller');
