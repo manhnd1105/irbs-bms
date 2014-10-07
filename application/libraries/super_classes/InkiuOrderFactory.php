@@ -111,13 +111,13 @@ class InkiuOrderFactory implements ISingleton
 
         //If has id => Update
         if ($id) {
-            $status = self::map_db_has_id($info);
+            $status = $this->map_db_has_id($info);
             if (!$status) {
                 throw new \Exception('Error while updating in map_db');
             }
         } //If has no id => Create
         else {
-            $status = self::map_db_has_no_id($info);
+            $status = $this->map_db_has_no_id($info);
             if (!$status) {
                 throw new \Exception('Error while creating in map_db');
             }
@@ -190,5 +190,14 @@ class InkiuOrderFactory implements ISingleton
      */
     private function __clone()
     {
+    }
+
+    /**
+     * @param $info
+     * @return array
+     */
+    public function filter($info)
+    {
+        return $this->model_order->filter($info);
     }
 }
