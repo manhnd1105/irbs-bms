@@ -36,8 +36,72 @@ class Upload_controller extends Frontend_Controller{
 
     //upload image file
     public function upload(){
-        echo'dsdadasdadsa';
-//        if (isset($_POST['submit'])) {
+        if(!empty($_FILES['files'])){
+
+            echo 'This is file upload';
+        }else{
+            echo 'Please choose your images !';
+        }
+
+   }
+
+    //mobile upload images
+    public function  mobile_upload(){
+        if(!empty($_FILES['files'])){
+            $status = $this->save_files();
+            if($status){
+                echo 'File was saved !';
+            }
+        }else{
+            $this->view_mobile_upload();
+        }
+    }
+
+    //function send file to irbs-fms
+    private  function  save_files(){
+        $status = '';
+        foreach ($_FILES['files']['name'] as $key => $name) {
+            if ($_FILES['files']['error'][$key] == 0) {
+                $status = $this->call_fms_sender($key, $name);
+            }
+        }
+        return $status;
+    }
+    private function call_fms_sender($key, $name)
+    {
+        $image = array(
+            'image' => '@'
+                .$_FILES['files']['tmp_name'][$key]
+                .';filename='.$name
+                .';type='.$_FILES['files']['type'][$key],
+        );
+        //$data = http_build_query($image, NULL, '&');
+        $url ='http://localhost/irbs-fms/index.php/file/image_controller/call_fms_receiver';
+
+        //initialise the curl request
+        $request = curl_init();
+        curl_setopt($request,CURLOPT_URL,$url);
+        curl_setopt($request,CURLOPT_USERAGENT,"Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201");
+        //send a file
+        curl_setopt($request,CURLOPT_POST,true);
+
+        curl_setopt($request, CURLOPT_POSTFIELDS,$image);
+
+        //output the response
+        curl_setopt($request,CURLOPT_RETURNTRANSFER,true);
+        $status = curl_exec($request);
+
+        //close curl request
+        curl_close($request);
+
+        return $status;
+
+    }
+
+
+    function  test(){
+
+        //        if (isset($_POST['submit'])) {
 //            if (!empty($_FILES['upload']['name'])) {
 //                $ch = curl_init();
 //                $localfile = $_FILES['upload']['tmp_name'];
@@ -125,12 +189,7 @@ class Upload_controller extends Frontend_Controller{
 //        $return = array('msg' => $msg);
 //
 //        echo json_encode($return);
-
-   }
-
-    //mobile upload images
-    public function  mobile_upload(){
-
     }
+
 
 }

@@ -36,7 +36,7 @@ echo '<div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="upload_info">
+                    <table class="table" id="upload_info">
                     <thead>
                         <tr>
                             <td class="text-center"><strong><i class="fa fa-table"></i></strong></td>
