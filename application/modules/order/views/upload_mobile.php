@@ -36,7 +36,7 @@ echo '<div class="panel-body" id="images_upload">
             <div class="row">
                 <div class="col-xs-4">
                     <a href="#" class="thumbnail">
-                        <img src="http://placehold.it/200x200" alt="..."/>
+                        <img src="http://placehold.it/200x200" />
                     </a>
                 </div>
                 <div class="col-xs-4">
