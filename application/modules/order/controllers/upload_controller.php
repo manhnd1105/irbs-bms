@@ -23,6 +23,17 @@ class Upload_controller extends Frontend_Controller{
         $this->template_controller->demo_template('order', '/upload',$data);
     }
 
+    //create view upload_mobile
+
+    public function view_mobile_upload(){
+        $data['controller'] = 'upload_controller';
+        $data['action'] = 'mobile_upload';
+        $data['module'] = 'order';
+
+        $this->load->module('template/template_controller');
+        $this->template_controller->demo_template('order', '/upload_mobile',$data);
+    }
+
     //upload image file
     public function upload(){
 //        if (isset($_POST['submit'])) {
@@ -113,5 +124,10 @@ class Upload_controller extends Frontend_Controller{
 //        echo json_encode($return);
 
    }
+
+    //mobile upload images
+    public function  mobile_upload(){
+
+    }
 
 }

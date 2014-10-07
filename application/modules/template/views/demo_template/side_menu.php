@@ -6,13 +6,22 @@
  * Time: 2:56 PM
  */
 
-echo '<p>' . anchor('order/order_controller/index', 'Manage Order') . '</p>';
-echo '<p>' . anchor('order/order_controller/view_create', 'Create Order') . '</p>';
-echo '<p>' . anchor('order/order_controller/view_progress', 'Progress') . '</p>';
-echo '<p>' . anchor('order/order_controller/view_payment', 'Payment') . '</p>';
-echo '<p>' . anchor('order/order_controller/view_crud_custom', 'Order Custom View') . '</p>';
-echo '<p>' . anchor('order/order_controller/view_order_tracking', 'Order Tracking') . '</p>';
-echo '<p>' . anchor('order/upload_controller/view_upload', 'Upload File') . '</p>';
+echo '<li>' . anchor('order/order_controller/index','Manage Order','class="active"').'</li>';
+echo '<li>' . anchor('order/order_controller/view_create', 'Create Order','class="active"') . '</li>';
+echo '<li>' . anchor('order/order_controller/view_progress', 'Progress','class="active"') . '</li>';
+echo '<li>' . anchor('order/order_controller/view_payment', 'Payment','class="active"') . '</li>';
+echo '<li>' . anchor('order/order_controller/view_crud_custom', 'Order Custom View','class="active"') . '</li>';
+echo '<li>' . anchor('order/order_controller/view_order_tracking', 'Order Tracking','class="active"') . '</li>';
+
+echo '<li><a href="#collapseUpload" data-toggle="collapse" data-parent="#accordion"><i class="fa fa-cloud-upload fa-fw"></i> Upload form<i class="pull-right fa fa-plus"></i></a>'
+.'<div id="collapseUpload" class="panel-collapse collapse">'
+.'<ul class="nav nav-second-level">';
+    echo '<li>' . anchor('order/upload_controller/view_upload','<i class="fa fa-upload fa-fw"></i>Upload File') . '</li>';
+    echo '<li>' . anchor('order/upload_controller/view_mobile_upload', '<i class="fa fa-mobile fa-fw"></i>Mobile Upload File') . '</li>';
+echo '</ul>'
+.'</div>'
+.'</li>';
+
 //echo '<p>' . anchor('account/account_controller/view_create', 'Create Inkiu account') . '</p>';
 //echo '<p>' . anchor('authentication/authentication_controller/', 'Authentication') . '</p>';
 //echo '<p>' . anchor('rbac/perm_controller/', 'Manage permissions') . '</p>';
