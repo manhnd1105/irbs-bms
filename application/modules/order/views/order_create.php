@@ -1,7 +1,5 @@
 <?php
 
-
-
 /** @var $module string */
 /** @var $controller string */
 /** @var $action string */
