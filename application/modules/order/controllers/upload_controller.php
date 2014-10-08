@@ -37,8 +37,10 @@ class Upload_controller extends Frontend_Controller{
     //upload image file
     public function upload(){
         if(!empty($_FILES['files'])){
-
-            echo 'This is file upload';
+            $status = $this->save_files();
+            if($status){
+                echo 'File was saved !';
+            }
         }else{
             echo 'Please choose your images !';
         }
@@ -73,7 +75,7 @@ class Upload_controller extends Frontend_Controller{
             'image' => '@'
                 .$_FILES['files']['tmp_name'][$key]
                 .';filename='.$name
-                .';type='.$_FILES['files']['type'][$key],
+                .';type='.$_FILES['files']['type'][$key]
         );
         //$data = http_build_query($image, NULL, '&');
         $url ='http://localhost/irbs-fms/index.php/file/image_controller/call_fms_receiver';
@@ -81,10 +83,14 @@ class Upload_controller extends Frontend_Controller{
         //initialise the curl request
         $request = curl_init();
         curl_setopt($request,CURLOPT_URL,$url);
+        curl_setopt($request,CURLOPT_HEADER,true);
+        curl_setopt($request,CURLOPT_HTTPHEADER,array("Content-Type:multipart/form-data"));
         curl_setopt($request,CURLOPT_USERAGENT,"Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201");
-        //send a file
-        curl_setopt($request,CURLOPT_POST,true);
 
+        //send a file
+        curl_setopt($request,CURLOPT_INFILESIZE,filesize($_FILES['files']['tmp_name'][$key]));
+        curl_setopt($request, CURLOPT_BUFFERSIZE, 128);
+        curl_setopt($request,CURLOPT_POST,true);
         curl_setopt($request, CURLOPT_POSTFIELDS,$image);
 
         //output the response
@@ -97,99 +103,5 @@ class Upload_controller extends Frontend_Controller{
         return $status;
 
     }
-
-
-    function  test(){
-
-        //        if (isset($_POST['submit'])) {
-//            if (!empty($_FILES['upload']['name'])) {
-//                $ch = curl_init();
-//                $localfile = $_FILES['upload']['tmp_name'];
-//                $fp = fopen($localfile, 'r');
-//                curl_setopt($ch,CURLOPT_USERPWD,"email@email.org:password");
-//                curl_setopt($ch, CURLOPT_URL, 'ftp://ftp_login:password@ftp.domain.com/'.$_FILES['upload']['name']);
-//                curl_setopt($ch, CURLOPT_UPLOAD, 1);
-//                curl_setopt($ch, CURLOPT_INFILE, $fp);
-//                curl_setopt($ch, CURLOPT_INFILESIZE, filesize($localfile));
-//
-//                //echo $localfile;
-//                curl_exec ($ch);
-//                $error_no = curl_errno($ch);
-//                curl_close ($ch);
-//                if ($error_no == 0) {
-//                    $error = 'File uploaded succesfully.';
-//                } else {
-//                    $error = 'File upload error.';
-//                }
-//            } else {
-//                $error = 'Please select a file.';
-//            }
-//        }
-
-//=====================================================================
-        //$url = 'http://localhost/ajaximageupload/uploaded_file.php';
-//        $url = 'http://localhost/irbs-fms/index.php/file/image_controller/view_crud';
-//        set_time_limit(0);
-//        if (isset($_FILES['upload']))
-//        {
-//            $tmpfile = $_FILES['upload']['tmp_name'];
-//            //$filename = basename($_FILES['upload']['name']);
-//            $type = basename($_FILES['upload']['type']);
-//            $data = array(
-//                //'uploaded_file' => '@'.$tmpfile.';filename='.$filename.';type='.$type,
-//                'uploaded_file' => '@'.$tmpfile,
-//            );
-//            $build_data = http_build_query($data, NULL, '&');
-//            //print $build_data;
-//            $ch = $this->Curl->post($data,array());
-////            curl_setopt($ch,CURLOPT_CUSTOMREQUEST,'POST');
-////            curl_setopt($ch, CURLOPT_POST, true);
-////            curl_setopt($ch, CURLOPT_POSTFIELDS, $build_data);
-//
-//            //curl_setopt($ch, CURLOPT_FILE, $data);
-//            $ch->post($data,array());
-////            curl_exec($ch);
-////            curl_close($ch);
-//
-//        }
-
-//=====================================================================
-
-//        $localFile = $_FILES['upload']['tmp_name'];
-//
-//        $fp = fopen($localFile, 'r');
-//
-//// Connecting to website.
-//        $ch = curl_init();
-//
-////        curl_setopt($ch, CURLOPT_USERPWD, "email@email.org:password");
-////        curl_setopt($ch, CURLOPT_URL, 'ftp://@ftp.website.net/audio/' . $_FILES['upload']['name']);
-//        curl_setopt($ch, CURLOPT_URL, 'http://localhost/ajaximageupload/uploaded_file.php'. $_FILES['upload']['name']);
-//        curl_setopt($ch, CURLOPT_UPLOAD, 1);
-//        curl_setopt($ch, CURLOPT_TIMEOUT, 86400); // 1 Day Timeout
-//        curl_setopt($ch, CURLOPT_INFILE, $fp);
-//        //curl_setopt($ch, CURLOPT_NOPROGRESS, false);
-//        //curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, 'CURL_callback');
-//        curl_setopt($ch, CURLOPT_BUFFERSIZE, 128);
-//        curl_setopt($ch, CURLOPT_INFILESIZE, filesize($localFile));
-//        curl_setopt($ch, CURLOPT_POST, true);
-//        curl_exec ($ch);
-
-//        if (curl_errno($ch)) {
-//
-//            $msg = curl_error($ch);
-//        }
-//        else {
-//
-//            $msg = 'File uploaded successfully fafsfds.';
-//        }
-//
-//        curl_close ($ch);
-//
-//        $return = array('msg' => $msg);
-//
-//        echo json_encode($return);
-    }
-
 
 }
