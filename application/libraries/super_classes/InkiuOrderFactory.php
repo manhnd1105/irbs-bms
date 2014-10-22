@@ -200,4 +200,9 @@ class InkiuOrderFactory implements ISingleton
     {
         return $this->model_order->filter($info);
     }
+
+    public function assign_worker($order_id, $acc_id)
+    {
+        return $this->model_order->assign_worker($order_id, $acc_id);
+    }
 }

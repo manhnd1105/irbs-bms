@@ -199,6 +199,23 @@ class Model_order
         }
         return $result;
     }
+
+    /**
+     * Assign worker to selected order
+     * @param $order_id
+     * @param $acc_id
+     * @return bool
+     */
+    public function assign_worker($order_id, $acc_id)
+    {
+        try {
+
+        } catch (Exception $e) {
+            \super_classes\IrbsException::write_log('error', $e);
+            return false;
+        }
+        return true;
+    }
 }
 
 /**
