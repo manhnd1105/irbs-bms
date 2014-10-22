@@ -5,7 +5,7 @@ namespace super_classes;
  * Class ImageFactory
  * @package super_classes
  */
-class ImageFactory
+class ImageFactory implements ISingleton
 {
     /**
      * @var
@@ -34,7 +34,7 @@ class ImageFactory
     /**
      * Call this method to get singleton
      *
-     * @return RoleFactory
+     * @return ImageFactory
      */
     public static function get_instance()
     {
@@ -42,11 +42,11 @@ class ImageFactory
             if (!self::$instance) {
                 self::$instance = new ImageFactory();
             }
-            return self::$instance;
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo 'error: ' . $e->getMessage();
         }
+        return self::$instance;
     }
 
     /**
