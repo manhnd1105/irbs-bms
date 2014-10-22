@@ -24,6 +24,14 @@ echo '</ul>'
 .'</div>'
 .'</li>';
 
+echo '<li><a href="#collapseEmail" data-toggle="collapse" data-parent="#accordion"><i class="fa fa-envelope fa-fw"></i> Email form<i class="pull-right fa fa-plus"></i></a>'
+    .'<div id="collapseEmail" class="panel-collapse collapse">'
+    .'<ul class="nav nav-second-level">';
+echo '<li>' . anchor('/email/email_controller/view_email','Test sender','class="active"').'</li>';
+echo '<li>' . anchor('/email/email_controller/view_email','<i class="fa fa-cog fa-fw"></i>Email Config','class="active"').'</li>';
+echo '</ul>'
+    .'</div>'
+    .'</li>';
 //echo '<p>' . anchor('account/account_controller/view_create', 'Create Inkiu account') . '</p>';
 //echo '<p>' . anchor('authentication/authentication_controller/', 'Authentication') . '</p>';
 //echo '<p>' . anchor('rbac/perm_controller/', 'Manage permissions') . '</p>';
