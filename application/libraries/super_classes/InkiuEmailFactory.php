@@ -124,7 +124,7 @@ class InkiuEmailFactory implements IEmail{
      * @param $info
      * @return  boolean
      */
-    public function update_file($info) {
+    public function update_inkiu_email($info) {
         try{
             //Update object by passed information
             $email_config = $this ->create_inkiu_email_obj($info);
@@ -142,7 +142,7 @@ class InkiuEmailFactory implements IEmail{
      * @param $email
      * @return bool
      */
-    public function delete_file($email) {
+    public function delete_inkiu_email($email) {
         try {
             $status = $this->model_email->remove($email);
         } catch (\Exception $e) {
