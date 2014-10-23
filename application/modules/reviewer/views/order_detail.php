@@ -1,5 +1,27 @@
 <br/>
 <div class="row">
+    <div class='col-sm-8'>
+    </div>
+    <div class='col-sm-4'>
+        <div class="form-group">
+            <div class='input-group date' id='datetimepicker5'>
+                <input type='text' class="form-control" data-date-format="YYYY/MM/DD"/>
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker5').datetimepicker({
+                pickTime: false
+            });
+        });
+    </script>
+</div>
+
+<div class="row">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <strong>Order number <?php echo $order_id ?> detail</strong>
