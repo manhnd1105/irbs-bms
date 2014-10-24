@@ -48,7 +48,7 @@
                             echo '<td>'.$index.'</td>';
                             //echo '<td>'.$row['file_id'].'</td>';
                             echo '<td>';
-                           // echo anchor('file/image_controller/image_detail/' .$row['file_id'], '<img class="thumbnail" src="'.$row['path'].'"; style="width: 90px; height: 90px;"/>','class="pull-left img-responsive"');
+                            echo anchor('reviewer/review_controller/image_detail/' .$row['file_id'], '<img class="thumbnail" src=""; style="width: 90px; height: 90px;"/>','class="pull-left img-responsive"');
                             echo '</td>';
                             echo '<td>';
                             echo '<p><span>Worder:'.$row['worker_id'].' </span></p>';

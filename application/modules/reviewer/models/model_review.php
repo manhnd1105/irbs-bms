@@ -17,26 +17,23 @@ class Model_review extends CI_Model{
         self::$db = &get_instance()->db;
     }
 
-//    /**
-//     *
-//     */
-//    public function read($where = NULL, $required_fields = '*', $return_type = 'all') {
-//        if ($where !== NULL) {
-//            $this->db->where($where);
-//        }
-//        $this->db->select($required_fields);
-//        $this->db->from('order_detail');
-//        $this->db->join('file', 'file.id = order_detail.file_id');
-//        $result = array();
-//        switch ($return_type) {
-//            case 'all':
-//                $result = $this->db->get()->result_array();
-//                break;
-//            case 'one':
-//                $result = $this->db->get()->row_array();
-//        }
-//        return $result;
-//    }
+    public function read_file_details($where = NULL, $required_fields = '*', $return_type = 'all') {
+        if ($where !== NULL) {
+            $this->db->where($where);
+        }
+        $this->db->select($required_fields);
+        $this->db->from('file');
+        $this->db->join('order_detail', 'file.id = order_detail.file_id');
+        $result = array();
+        switch ($return_type) {
+            case 'all':
+                $result = $this->db->get()->result_array();
+                break;
+            case 'one':
+                $result = $this->db->get()->row_array();
+        }
+        return $result;
+    }
 
     public function read_order($where = NULL, $required_fields = '*', $return_type = 'all')
     {

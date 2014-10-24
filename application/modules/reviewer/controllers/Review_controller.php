@@ -29,12 +29,18 @@ class Review_controller extends Frontend_Controller{
         $this->template_controller->demo_template('reviewer', '/order_detail', $data);
     }
 
+    public function image_detail($image_id){
+        $data['image'] = $this->rev_factory->load_file_detail($image_id);
+        $data['image_id'] = $image_id;
+        $this->render('reviewer', '/image_detail', $data);
+    }
+
     /**
      * @param $controller
      * @param $method
      * @param $data
      */
-//    private function render($controller, $method, $data) {
-//        $this->template_controller->demo_template($controller, $method, $data);
-//    }
+    private function render($controller, $method, $data) {
+        $this->template_controller->demo_template($controller, $method, $data);
+    }
 }
