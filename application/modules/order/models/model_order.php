@@ -71,15 +71,16 @@ class Model_order
         try
         {
             $this->db->trans_start();
-            //Insert into order table
+            //Insert into primary table
             $order_data = new order_table($info);
             $this->db->insert('irbs.order', $order_data);
 
-            //Get inserted id and then insert into inkiu order table
+            //Get inserted id and then insert into other joined tables
             $id = $this->db->insert_id();
             $info['id'] = $id;
             $inkiu_order_data = new inkiu_order_table($info);
             $this->db->insert('irbs.inkiu_order', $inkiu_order_data);
+
             $this->db->trans_complete();
         } catch (Exception $e)
         {
@@ -209,7 +210,13 @@ class Model_order
     public function assign_worker($order_id, $acc_id)
     {
         try {
-
+            //Insert into table order_component_worker
+            $this->db->insert(
+                'order_component_worker',
+                array(
+                    'order_id' => $order_id,
+                    'acc_id' => $acc_id
+            ));
         } catch (Exception $e) {
             \super_classes\IrbsException::write_log('error', $e);
             return false;
