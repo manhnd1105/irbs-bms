@@ -3,8 +3,10 @@
 <link rel="stylesheet" href="<?php echo base_url() . "assets/css/bootstrap.css"; ?>">
 <link rel="stylesheet" href="<?php echo base_url() . "assets/css/admin_template/sb_admin.css"; ?>">
 <link rel="stylesheet" href="<?php echo base_url() . "assets/font-awesome-4.1.0/css/font-awesome.css"; ?>">
+<link rel="stylesheet" href="<?php echo base_url() . "assets/css/bootstrap-datetimepicker.css"; ?>">
 <script type="text/javascript" src="<?php echo base_url() . "assets/js/jquery.js"; ?>"></script>
 <script type="text/javascript" src="<?php echo base_url() . "assets/js/bootstrap.js"; ?>"></script>
+<script type="text/javascript" src="<?php echo base_url() . "assets/js/bootstrap-datetimepicker.js"; ?>"></script>
 
 <!--Navigation-->
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">

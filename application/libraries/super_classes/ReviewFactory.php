@@ -66,26 +66,13 @@ class ReviewFactory implements ISingleton{
     }
 
 
-    public function load_files() {
-        $required_fields = '
-        file.id,
-        file.name,
-        file.path,
-        file.size,
-        file.type,
-        order_detail.order_id,
-        order_detail.worker_id,
-        order_detail.file_status,
-        order_detail.file_changed_path';
-        return $this->model_review->read(NULL,$required_fields,'all');
-    }
 
     /**
      * Load information of a file by its id
      * @param $id
      * @return array
      */
-    public function load_file($id = NULL) {
+    public function load_file_detail($id = NULL) {
         $required_fields = '
         file.id,
         file.name,
@@ -97,10 +84,16 @@ class ReviewFactory implements ISingleton{
         order_detail.file_status,
         order_detail.file_changed_path';
         if ($id != NULL) {
-            $data = $this->model_review->read(array('file.id' => $id), $required_fields, 'one');
+            $data = $this->model_review->read_file_details(array('file.id' => $id), $required_fields, 'one');
             return $data;
         }
         return $this->model_review->read();
+    }
+
+
+    public function filter($info)
+    {
+        return $this->model_review->filter($info);
     }
 }
 
