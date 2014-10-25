@@ -45,12 +45,12 @@
 | the active record class
 */
 
-$active_group = 'default';
+$active_group = 'remote';
 $active_record = TRUE;
 
-$db['remote']['hostname'] = 'mysql:host=123.30.238.216:1105';
-$db['remote']['username'] = 'manhnd';
-$db['remote']['password'] = 'password';
+$db['remote']['hostname'] = 'mysql:host=123.30.238.216:3306';
+$db['remote']['username'] = 'irbs';
+$db['remote']['password'] = '123456';
 $db['remote']['database'] = 'irbs';
 $db['remote']['dbdriver'] = 'pdo';
 $db['remote']['dbprefix'] = '';
