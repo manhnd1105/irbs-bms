@@ -201,8 +201,28 @@ class InkiuOrderFactory implements ISingleton
         return $this->model_order->filter($info);
     }
 
+    /**
+     * Assign a worker to handle an order
+     * @param $order_id
+     * @param $acc_id
+     * @return bool
+     */
     public function assign_worker($order_id, $acc_id)
     {
         return $this->model_order->assign_worker($order_id, $acc_id);
+    }
+
+    /**
+     * Get information of all orders created by an account (customer)
+     * @param $acc_id
+     * @return array
+     */
+    public function load_acc_orders_info($acc_id)
+    {
+        return $this->model_order->get_order(
+            array(
+                'creator_id' => $acc_id
+            )
+        );
     }
 }

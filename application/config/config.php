@@ -388,3 +388,5 @@ $config['site_open'] = true;
 
 //Forbid unauthorized users to access features of website (except login)
 $config['restrict_unauthorized'] = false;
+
+$config['ams_path'] = 'http://192.168.56.101/irbs-ams';
