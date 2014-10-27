@@ -39,14 +39,20 @@ class InkiuEmailFactory implements IEmail{
     private $model_email;
 
 
+    /**
+     *
+     */
     private function __construct()
     {
         $CI = &get_instance();
-        $CI->load->model('order/Model_email');
+        $CI->load->model('email/Model_email');
         $this->model_email = $CI->Model_email;
 
     }
 
+    /**
+     *
+     */
     function __clone()
     {
 
@@ -162,6 +168,36 @@ class InkiuEmailFactory implements IEmail{
 
     }
 
+    /**
+     * Get email address of an account on external system
+     * @param $id
+     */
+    public function get_acc_email($id)
+    {
+        //Initialize a request to default account server
+        $req = new RestfulRequestMaker();
 
+        //Return result
+        return $req->make_request('get', 'account', array(
+            'id' => $id
+        ))['email'];
+    }
+
+    /**
+     * Get all email addresses of all accounts on external system
+     */
+    public function get_acc_emails()
+    {
+        //Initialize a request to default account server
+        $req = new RestfulRequestMaker();
+
+        //Return result
+        $accs = $req->make_request('get', 'accounts');
+        $emails = array();
+        foreach ($accs as $row) {
+            $emails[] = $row['email'];
+        }
+        return $emails;
+    }
 
 }

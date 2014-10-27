@@ -31,7 +31,7 @@ class RestfulRequestMaker
         );
         $this->ci->rest->initialize($config);
     }
-    public function make_request($method, $uri, $params, $format = 'serialize')
+    public function make_request($method, $uri, $params = null, $format = 'serialize')
     {
         $result = $this->ci->rest->{$method}($uri, $params, $format);
         return $result;
