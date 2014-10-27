@@ -53,7 +53,6 @@ $autoload['packages'] = array();
 */
 
 $autoload['libraries'] = array(
-    'rest',
     'curl',
     'session',
     'database'
