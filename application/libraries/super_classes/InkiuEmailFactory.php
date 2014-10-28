@@ -38,6 +38,10 @@ class InkiuEmailFactory implements IEmail{
     */
     private $model_email;
 
+    /***
+     * @var \CI_Email
+    */
+    private $email;
 
     /**
      *
@@ -47,7 +51,7 @@ class InkiuEmailFactory implements IEmail{
         $CI = &get_instance();
         $CI->load->model('email/Model_email');
         $this->model_email = $CI->Model_email;
-
+        $this->email = $CI->load->library('email');
     }
 
     /**
@@ -61,9 +65,9 @@ class InkiuEmailFactory implements IEmail{
     /**
      * Load information email config by its email address
     */
-    public function load_email_config($email = null){
+    public function load_inkiu_email_config($email = null){
         if($email != null){
-            $data = $this->model_email->read(array('email'=>$email));
+            $data = $this->model_email->read(array('email'=>$email),'*','one');
             return $data;
         }
         return $this->model_email->read();
@@ -161,11 +165,48 @@ class InkiuEmailFactory implements IEmail{
 
     /**
      * implements method send_email
-     * @return InkiuEmailFactory
+     * @param $msg
+     * @return bool
      */
-    public static function send_email($msg)
+    public function send_email($msg)
     {
-
+        $from = $msg['from'];
+        $to = $msg['to'];
+        $subject = $msg['subject'];
+        $message = $msg['message'];
+        $mail_type = $msg['mail_type'];
+        $config = Array(
+            'protocol'       => 'smtp',
+            //'mailpath' => '/usr/sbin/sendmail',
+            'smtp_host'      => 'ssl://smtp.googlemail.com',
+            'smtp_user'      => $from['email'],
+            'smtp_pass'      => $from['password'],
+            'smtp_port'      => 465,
+            'smtp_timeout'   => 5,
+            'wordwrap'       => true,
+            'wrapchars'      => 76,
+            'mailtype'       => $mail_type,
+            'charset'        => 'utf-8',
+            'validate'       => false,
+            'priority'       => 3,
+            'crlf'           => "\r\n",
+            'newline'        => "\r\n",
+            'bcc_batch_mode' => false,
+            'bcc_batch_size' => 200,
+        );
+        $this->email->initialize($config);
+        $this->email->from($from['email'], $from['name']);
+        $this->email->to($to['to']);
+        $this->email->cc($to['cc']);
+        $this->email->bcc($to['bcc']);
+        $this->email->subject($subject);
+        $this->email->message($message);
+        if ($this->email->send()) {
+            return true;
+        } else {
+            show_error($this->email->print_debugger());
+            return false;
+        }
     }
 
     /**

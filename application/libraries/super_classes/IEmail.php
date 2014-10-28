@@ -9,5 +9,5 @@ namespace super_classes;
 
 interface IEmail{
     public static function get_instance();
-    public static function send_email($msg);
+    public function send_email($msg);
 }

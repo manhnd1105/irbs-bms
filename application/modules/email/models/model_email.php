@@ -43,6 +43,7 @@ class Model_email{
             case 'one':
                 $result = $this->db->get()->row_array();
         }
+
         return $result;
     }
 

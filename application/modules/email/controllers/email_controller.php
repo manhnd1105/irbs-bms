@@ -22,7 +22,6 @@ class Email_controller extends Frontend_Controller
         parent::__construct();
         $this->email_factory = \super_classes\InkiuEmailFactory::get_instance();
         $this->load->module('template/template_controller');
-        $this->load->library('email');
     }
 
     /**
@@ -30,49 +29,10 @@ class Email_controller extends Frontend_Controller
      */
     private function sender($box_msg)
     {
-
-        //Email data
-        $from = $box_msg['from'];
-        $to = $box_msg['to'];
-        $subject = $box_msg['subject'];
-        $message = $box_msg['message'];
-        $mail_type = $box_msg['mail_type'];
-
-        // Email configuration
-        $config = Array(
-            'protocol'       => 'smtp',
-            //'mailpath' => '/usr/sbin/sendmail',
-            'smtp_host'      => 'ssl://smtp.googlemail.com',
-            'smtp_user'      => $from['email'],
-            'smtp_pass'      => $from['password'],
-            'smtp_port'      => 465,
-            'smtp_timeout'   => 5,
-            'wordwrap'       => true,
-            'wrapchars'      => 76,
-            'mailtype'       => $mail_type,
-            'charset'        => 'utf-8',
-            'validate'       => false,
-            'priority'       => 3,
-            'crlf'           => "\r\n",
-            'newline'        => "\r\n",
-            'bcc_batch_mode' => false,
-            'bcc_batch_size' => 200,
-        );
-        $this->email->initialize($config);
-
-        $this->email->from($from['email'], $from['name']);
-        $this->email->to($to['to']);
-        $this->email->cc($to['cc']);
-        $this->email->bcc($to['bcc']);
-        $this->email->subject($subject);
-        $this->email->message($message);
-
-        if ($this->email->send()) {
-            echo 'Your email was sent.';
-        } else {
-            show_error($this->email->print_debugger());
+        $status = $this->email_factory->send_email($box_msg);
+        if($status){
+            echo 'your email was sent !';
         }
-
     }
 
     /**
@@ -111,15 +71,11 @@ class Email_controller extends Frontend_Controller
      */
     public function send_email()
     {
-        //fix $message data
-//        $message = '
-//                Dear John,
-//                This is test email message
-//                Best regards,
-//                Inkiu company
-//            ';
-
+        //fix $message html data
         //$message = 'http://localhost/irbs-fms/index.php/order/order_controller/view_order_detail/4';
+        //fix inkiu email for test function send_email
+        $from = $this->email_factory->load_inkiu_email_config('inkiutest@gmail.com');
+
         $message = $_POST['message'];
         $to = $_POST['to'];
         $cc = $_POST['cc'];
@@ -133,15 +89,8 @@ class Email_controller extends Frontend_Controller
             $mail_type = 'text';
         }
 
-
         $box_msg = array(
-            'from'      => array(
-                //fixed email
-                'email'    => 'inkiutest@gmail.com',
-                'password' => 'inkiu123456',
-                //name => $_POST['name']
-                'name'     => 'Inkiu Company Service'
-            ),
+            'from'      => $from,
             //test with data fixed
             'to'        => array(
                 'to'  => $to,
@@ -152,7 +101,7 @@ class Email_controller extends Frontend_Controller
             'message'   => $msg,
             'mail_type' => $mail_type
         );
-
+        //var_dump($from);
         $this->sender($box_msg);
     }
 
