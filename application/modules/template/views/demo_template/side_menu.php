@@ -16,7 +16,7 @@ echo '<li>' . anchor('price_list/price_controller/view_price', 'View Price','cla
 echo '<li>' . anchor('order/detail_controller', 'Assign workers','class="active"') . '</li>';
 echo '<li>' . anchor('reviewer/review_controller/view_order','<i class="fa fa-usd fa-fw"></i>Review Image','class="active"').'</li>';
 
-echo '<li><a href="#collapseUpload" data-toggle="collapse" data-parent="#accordion"><i class="fa fa-cloud-upload fa-fw"></i> Upload form<i class="pull-right fa fa-plus"></i></a>'
+echo '<li><a href="#collapseUpload" data-toggle="collapse" data-parent="#accordion"><i class="fa fa-cloud-upload fa-fw"></i> Upload pages<i class="pull-right fa fa-plus"></i></a>'
 .'<div id="collapseUpload" class="panel-collapse collapse">'
 .'<ul class="nav nav-second-level">';
     echo '<li>' . anchor('order/upload_controller/view_upload','<i class="fa fa-upload fa-fw"></i>Upload File') . '</li>';
@@ -25,7 +25,7 @@ echo '</ul>'
 .'</div>'
 .'</li>';
 
-echo '<li><a href="#collapseEmail" data-toggle="collapse" data-parent="#accordion"><i class="fa fa-envelope fa-fw"></i> Email form<i class="pull-right fa fa-plus"></i></a>'
+echo '<li><a href="#collapseEmail" data-toggle="collapse" data-parent="#accordion"><i class="fa fa-envelope fa-fw"></i> Email pages<i class="pull-right fa fa-plus"></i></a>'
     .'<div id="collapseEmail" class="panel-collapse collapse">'
     .'<ul class="nav nav-second-level">';
 echo '<li>' . anchor('/email/email_controller/view_email','Test sender','class="active"').'</li>';
@@ -33,3 +33,5 @@ echo '<li>' . anchor('/email/email_controller/view_email','<i class="fa fa-cog f
 echo '</ul>'
     .'</div>'
     .'</li>';
+
+echo '<li>' . anchor('comment/comment_controller/index','<i class="fa fa-comments fa-fw"></i>Comments Page','class="active"').'</li>';
