@@ -50,7 +50,7 @@ class Model_comment{
         $this->db->select($required_fields);
 
         $this->db->from('inkiu_comment');
-        $this->db->order_by('time_commented','desc');
+        $this->db->order_by('time_commented','asc');
         $result = array();
         switch ($return_type) {
             case 'all' :

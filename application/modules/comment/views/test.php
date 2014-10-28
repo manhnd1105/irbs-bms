@@ -1,8 +1,10 @@
 <br/>
 <?php
+echo "<script src='" . base_url() . "application/modules/comment/views/js/comment.js'></script>";
 /** @var $module string */
 /** @var $controller string */
 /** @var $action string */
+/** @var $img_id int */
 echo form_open($module . '/' . $controller . '/' . $action);
 echo '
    <div class="row">
@@ -22,14 +24,16 @@ echo'
                 <h4>Leave a Comment:</h4>
                 <form role="form">
                     <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea class="form-control" rows="3" id="content"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Post</button>
+                    <button type="button" class="btn btn-primary" id="post">Post</button>
                 </form>
             </div>
 ';
 echo'<hr/>';
 
+echo '<div id ="wrap_comment">';
+/** @var $comment array */
 foreach($comment as $c){
     echo'<!-- Comment -->
             <div class="media">
@@ -47,8 +51,8 @@ foreach($comment as $c){
 
             </div>
     ';
-
 }
+echo '</div>';
 echo'
        </div>
    </div>
