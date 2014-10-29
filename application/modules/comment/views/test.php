@@ -50,8 +50,8 @@ foreach($comment as $c){
     ';
     echo'
                 <div class="media-body">
-                    <h4 class="media-heading">Reviewer id: '.$c['reviewer_id'].'
-                        <small>'.$c['time_commented'].'</small>
+                    <h4 class="media-heading">Reviewer id: <span class="label label-warning" id="reviewer">'.$c['reviewer_id'].'</span>
+                        <small>said at: '.$c['time_commented'].'</small>
                     </h4>
                     '.$c['content'].'
                 </div>

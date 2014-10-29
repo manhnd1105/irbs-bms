@@ -90,7 +90,6 @@ class InkiuCommentFactory implements ISingleton{
             //If object has no id => Insert new record to database
             if ($info['id']== NULL || $info['id'] == '') {
                 $inserted_id =  $this->model_comment->insert($info);
-                print $inserted_id;
                 $status = $inserted_id > 0;
             }
 

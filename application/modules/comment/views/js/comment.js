@@ -10,6 +10,7 @@ $(document).ready(function(){
         event.preventDefault();
         var content = document.getElementById('content').value;
         var image_id = document.getElementById('img_id').value;
+
         var data = {
           "action": "save",
           "comment":content,
@@ -20,7 +21,7 @@ $(document).ready(function(){
             type: "POST",
             data:data,
             success: function (res) {
-                show_comment(res);
+                show_comment(reviewer,res);
             },
             error: function()
             {
@@ -32,15 +33,22 @@ $(document).ready(function(){
         //show_comment(content);
     });
 
-    function show_comment(content){
+    function show_comment(reviewer, content){
         var wrap = document.getElementById('wrap_comment');
+        var current_time = new Date();
+        //var current_time = $.datetimepicker.formatDate('yy-mm-dd hh:mm:ss',time);
         wrap.innerHTML += '' +
         '<div class="media"> ' +
         '<a class="pull-left" href="#">' +
         '<img class="media-object" src="http://placehold.it/64x64" alt="">' +
         '</a>' +
         '<div class="media-body">' +
-        '<h4 class="media-heading">Start Bootstrap<small> August 25, 2014 at 9:30 PM</small></h4>' +
+        '<h4 class="media-heading">'+
+        'Reviewer'+
+        '<small> ' +
+         current_time.toLocaleDateString()+
+        //current_time.format("YYYY-MM-DD hh:mm:ss").toDateString()+
+        '</small></h4>' +
         content+
         '</div>'+
         '</div>';

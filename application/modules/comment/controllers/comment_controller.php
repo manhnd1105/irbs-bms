@@ -89,7 +89,6 @@ class Comment_controller extends  Frontend_Controller{
             'img_id' => $this->img_id,
             'reviewer_id' => $this->reviewer_id
         );
-        //var_dump($info);
         $status = $this->comment_factory->create_comment($info);
         return $status;
     }

@@ -72,33 +72,15 @@ class Model_comment{
         try{
             $this->db->trans_start();
             //insert into table 'inkiu_comment'
-            //$comment = new Comment($info);
-            if(is_array($info)){
-                $img_id = $info['img_id'];
-                $content = $info['content'];
-                $reviewer_id = $info['reviewer_id'];
-                $query = 'INSERT INTO inkiu_comment(`image_id`, `reviewer_id`, `content`)
-                          VALUES ('.$img_id.', '.$reviewer_id.', '.$content.');
-                          WHERE inkiu_comment.image_id ='.$img_id;
+            $comment = new InkiuComment($info);
 
-                echo $query;
-                $this->db->query($query);
-                //Get inserted id and then insert into file table
-                $inserted_id = $this->db->insert_id();
+            $this->db->insert('inkiu_comment',$comment);
 
-                $this->db->trans_complete();
-                return $inserted_id;
-            }else{
-                return -1;
-            }
+            //Get inserted id and then insert into file table
+            $inserted_id = $this->db->insert_id();
 
-//            $this->db->insert('inkiu_comment',$comment);
-//
-//            //Get inserted id and then insert into file table
-//            $inserted_id = $this->db->insert_id();
-//
-//            $this->db->trans_complete();
-//            return $inserted_id;
+            $this->db->trans_complete();
+            return $inserted_id;
         }
         catch (Exception $e){
             print $e->getMessage();
@@ -114,7 +96,7 @@ class Model_comment{
     public function update($info) {
         try{
             $this->db->trans_start();
-            $comment = new Comment($info);
+            $comment = new InkiuComment($info);
             $id = $info['id'];
             $this->db->update('inkiu_comment', $comment, array('id' => $id));
             $this->db->trans_complete();
@@ -148,7 +130,7 @@ class Model_comment{
 
 }
 
-class Comment {
+class InkiuComment {
 
     /**
      * @var
@@ -157,7 +139,7 @@ class Comment {
     /**
      * @var
      */
-    public $img_id;
+    public $image_id;
     /**
      * @var
      */
@@ -180,9 +162,10 @@ class Comment {
         if($info['id'] != '' || $info['id'] != null){
             $this->id = $info['id'];
         }
-        $this->img_id = $info['img_id'];
+        $this->image_id = $info['img_id'];
         $this->reviewer_id = $info['reviewer_id'];
         $this->content = $info['content'];
+        $this->status = $info['status'];
     }
 
 
