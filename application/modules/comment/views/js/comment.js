@@ -44,7 +44,7 @@ $(document).ready(function(){
         '</a>' +
         '<div class="media-body">' +
         '<h4 class="media-heading">'+
-        'Reviewer'+
+        'You said at'+
         '<small> ' +
          current_time.toLocaleDateString()+
         //current_time.format("YYYY-MM-DD hh:mm:ss").toDateString()+
