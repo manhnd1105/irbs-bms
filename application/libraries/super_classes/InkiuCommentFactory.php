@@ -90,6 +90,7 @@ class InkiuCommentFactory implements ISingleton{
             //If object has no id => Insert new record to database
             if ($info['id']== NULL || $info['id'] == '') {
                 $inserted_id =  $this->model_comment->insert($info);
+                print $inserted_id;
                 $status = $inserted_id > 0;
             }
 
@@ -109,7 +110,7 @@ class InkiuCommentFactory implements ISingleton{
      * @param $info
      * @return  boolean
      */
-    public function create_file($info) {
+    public function create_comment($info) {
         try{
             $comment = $this ->create_comment_obj($info);
             $status = $this->map_db($comment);
@@ -125,7 +126,7 @@ class InkiuCommentFactory implements ISingleton{
      * @param $info
      * @return  boolean
      */
-    public function update_file($info) {
+    public function update_comment($info) {
         try{
             //Update object by passed information
             $comment = $this ->create_comment_obj($info);

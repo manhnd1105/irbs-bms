@@ -71,17 +71,34 @@ class Model_comment{
     public function insert($info) {
         try{
             $this->db->trans_start();
+            //insert into table 'inkiu_comment'
+            //$comment = new Comment($info);
+            if(is_array($info)){
+                $img_id = $info['img_id'];
+                $content = $info['content'];
+                $reviewer_id = $info['reviewer_id'];
+                $query = 'INSERT INTO inkiu_comment(`image_id`, `reviewer_id`, `content`)
+                          VALUES ('.$img_id.', '.$reviewer_id.', '.$content.');
+                          WHERE inkiu_comment.image_id ='.$img_id;
 
-            //insert into table 'file'
-            $comment = new Comment($info);
+                echo $query;
+                $this->db->query($query);
+                //Get inserted id and then insert into file table
+                $inserted_id = $this->db->insert_id();
 
-            $this->db->insert('inkiu_comment',$comment);
+                $this->db->trans_complete();
+                return $inserted_id;
+            }else{
+                return -1;
+            }
 
-            //Get inserted id and then insert into file table
-            $inserted_id = $this->db->insert_id();
-
-            $this->db->trans_complete();
-            return $inserted_id;
+//            $this->db->insert('inkiu_comment',$comment);
+//
+//            //Get inserted id and then insert into file table
+//            $inserted_id = $this->db->insert_id();
+//
+//            $this->db->trans_complete();
+//            return $inserted_id;
         }
         catch (Exception $e){
             print $e->getMessage();
@@ -149,11 +166,19 @@ class Comment {
      * @var
      */
     public $content;
+    /**
+     * @var
+     */
+    public $time_commented;
+    /**
+     * @var
+     */
+    public $status;
 
 
     function __construct($info) {
         if($info['id'] != '' || $info['id'] != null){
-            $this->_id = $info['id'];
+            $this->id = $info['id'];
         }
         $this->img_id = $info['img_id'];
         $this->reviewer_id = $info['reviewer_id'];

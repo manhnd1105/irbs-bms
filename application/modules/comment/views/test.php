@@ -6,12 +6,15 @@ echo "<script src='" . base_url() . "application/modules/comment/views/js/commen
 /** @var $action string */
 /** @var $img_id int */
 echo form_open($module . '/' . $controller . '/' . $action);
+if(!isset($img_id) && empty($img_id)){
+    $img_id = 0;
+};
 echo '
    <div class="row">
        <div class="col-sm-3">
             <h3>Test with image id: '.$img_id.'</h3>
             <div class="input-group">
-                <input type="text" name="img_id" class="form-control" placeholder="Enter image id here.."/>
+                <input type="text" id="img_id" name="img_id" class="form-control" placeholder="Enter image id here.." value="'.$img_id.'" />
             </div>
             <br/>
             <button type="submit" class="btn btn-block btn-outline btn-primary">Show commnents</button>
@@ -33,6 +36,10 @@ echo'
 echo'<hr/>';
 
 echo '<div id ="wrap_comment">';
+
+if(!isset($comment) && empty($comment)){
+    $comment = array();
+};
 /** @var $comment array */
 foreach($comment as $c){
     echo'<!-- Comment -->
