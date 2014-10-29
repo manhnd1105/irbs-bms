@@ -34,4 +34,13 @@ echo '</ul>'
     .'</div>'
     .'</li>';
 
-echo '<li>' . anchor('comment/comment_controller/index','<i class="fa fa-comments fa-fw"></i>Comments Page','class="active"').'</li>';
+echo '<li>' . anchor('comment/comment_controller/index','<i class="fa fa-comments fa-fw"></i>Comments page','class="active"').'</li>';
+
+
+echo '<li><a href="#collapseWorker" data-toggle="collapse" data-parent="#accordion"><i class="fa fa-users fa-fw"></i> Worker pages<i class="pull-right fa fa-plus"></i></a>'
+    .'<div id="collapseWorker" class="panel-collapse collapse">'
+    .'<ul class="nav nav-second-level">';
+echo '<li>' . anchor('worker/worker_controller/index','<i class="fa fa-user-md fa-fw"></i>Worker Manager') . '</li>';
+echo '</ul>'
+    .'</div>'
+    .'</li>';

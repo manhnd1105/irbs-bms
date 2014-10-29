@@ -23,6 +23,7 @@ class Comment_controller extends  Frontend_Controller{
         parent::__construct();
         $this->load->module('template/template_controller');
         $this->comment_factory = \super_classes\InkiuCommentFactory::get_instance();
+
         if (isset($_POST["img_id"]) && !empty($_POST["img_id"])){
             $this->img_id = $_POST['img_id'];
         }else{
@@ -34,10 +35,10 @@ class Comment_controller extends  Frontend_Controller{
     }
 
     /**
-     * @param      $module
-     * @param      $method
-     * @param null $data
-     */
+ * @param      $module
+ * @param      $method
+ * @param null $data
+ */
     private function render($module, $method, $data = NULL)
     {
         $this->template_controller->demo_template($module, $method, $data);
