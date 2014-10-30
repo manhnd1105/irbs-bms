@@ -64,12 +64,12 @@ class Upload_controller extends Frontend_Controller{
         $status = '';
         foreach ($_FILES['files']['name'] as $key => $name) {
             if ($_FILES['files']['error'][$key] == 0) {
-                $status = $this->call_fms_sender($key, $name);
+                $status = $this->fms_sender($key, $name);
             }
         }
         return $status;
     }
-    private function call_fms_sender($key, $name)
+    private function fms_sender($key, $name)
     {
         $image = array(
             'image' => '@'
@@ -78,7 +78,9 @@ class Upload_controller extends Frontend_Controller{
                 .';type='.$_FILES['files']['type'][$key]
         );
         //$data = http_build_query($image, NULL, '&');
-        $url ='http://localhost/irbs-fms/index.php/file/image_controller/call_fms_receiver';
+        $url = $this->get_config_url_fms_receiver();
+
+        //$url ='http://localhost/irbs-fms/index.php/file/image_controller/fms_receiver';
 
         //initialise the curl request
         $request = curl_init();
@@ -102,6 +104,25 @@ class Upload_controller extends Frontend_Controller{
 
         return $status;
 
+    }
+
+    private function get_config_url_fms_receiver(){
+        $result = '';
+        $base_url = base_url();
+        $base_url_array = explode ('/',$base_url);
+        for($i = 0; $i < sizeof($base_url_array);$i++){
+            $str = $base_url_array[$i];
+            if($str != 'irbs-bms'){
+                if($result != ''){
+                    $result = $result.'/'.$str;
+                }else{
+                    $result = $result.$str;
+                }
+
+            }
+        }
+        $result = $result.'irbs-fms/index.php/file/image_controller/fms_receiver';
+        return $result;
     }
 
 }
