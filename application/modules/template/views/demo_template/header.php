@@ -68,6 +68,12 @@
                 <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
+                <?php
+                $acc_name = $this->session->userdata('acc_name');
+                $acc_id = $this->session->userdata('acc_id');
+                echo '<li><a href="#"><i class="fa fa-user fa-fw"></i>Hi, '.$acc_name.'</a>';
+                echo '<li><a href="#"><i class="fa fa-key fa-fw"></i>'.$acc_id.'</a>';
+                ?>
                 <li><a href="#"><i class="fa fa-gear fa-fw"></i>Profile</a>
                 </li>
                 <li><a href="#"><i class="fa fa-sign-out fa-fw"></i>Log out</a>
