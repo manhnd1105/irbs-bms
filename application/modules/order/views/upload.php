@@ -55,12 +55,12 @@ echo '<div class="panel-body">
 echo'</li>
             <li class="list-group-item text-center">';
 echo '<div class="btn-group-sm">';
-echo '<a class="btn btn-warning fileinput-button">
+echo '<a class="btn btn-default fileinput-button">
          <i class="fa fa-file-image-o fa-fw"></i>
          <span>Add images...</span>';
 echo '<input type="file" name="files" multiple="multiple" accept="image/*" id="files">';
 echo '</a>';
-echo '<button class="btn btn-primary" id="submit">
+echo '<button class="btn btn-default" id="submit">
                     <i class="fa fa-cloud-upload fa-fw"></i>
                     <span>Start upload</span>
                 </button>';

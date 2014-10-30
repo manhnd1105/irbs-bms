@@ -22,7 +22,7 @@ echo '
                 </div>
             </li>
             <li class="list-group-item text-center">
-                <button class="btn btn-info" type="submit">Next &NestedGreaterGreater;</button>
+                <button class="btn btn-default" type="submit">Next &NestedGreaterGreater;</button>
             </li>
         </ul>
     </div>
