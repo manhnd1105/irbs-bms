@@ -64,8 +64,8 @@ class Order_controller extends Frontend_Controller
     public function view_create()
     {
         //Ask view to render data
-        $data['controller'] = 'order_controller';
-        $data['action'] = 'create';
+        $data['controller'] = 'upload_controller';
+        $data['action'] = 'view_upload';
         $data['module'] = 'order';
 
         $this->render('order', '/order_create', $data);

@@ -1,13 +1,21 @@
 <script type="text/javascript">
     base_url = '<?=base_url()?>';
 </script>
-
+<br/>
 <?php
 echo "<script src='" . base_url() . "application/modules/order/views/js/upload.js'></script>";
 echo '<link rel="stylesheet" href="'.base_url() . 'assets/css/admin_template/upload.css"/>';
 echo
 '<div class="row">
-    <div class="panel panel-default" style="border: none;">';
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+    <ul class="list-group">
+            <li class="list-group-item">
+                <img src="
+                '.base_url().'application/modules/order/views/img/step2.png'.'" class="img-responsive"/><br/>
+            </li>
+            <li class="list-group-item">';
+
 
 /** @var $module string */
 /** @var $controller string */
@@ -15,20 +23,6 @@ echo
 echo form_open($module . '/' . $controller . '/' . $action,'enctype="multipart/form-data" id="uploadForm"');
 
 echo '<div class="panel-heading">
-        <div class="btn-group-sm">';
-echo '<a class="btn btn-warning fileinput-button">
-         <i class="fa fa-file-image-o fa-fw"></i>
-         <span>Add images...</span>';
-echo '<input type="file" name="files" multiple="multiple" accept="image/*" id="files">';
-echo '</a>';
-echo '<button class="btn btn-primary" id="submit">
-                    <i class="fa fa-cloud-upload fa-fw"></i>
-                    <span>Start upload</span>
-                </button>';
-echo'<button type="reset" class="btn btn-outline btn-default">
-                    <i class="fa fa-refresh fa-fw"></i>Refresh
-                </button>
-            </div>
         </div>';
 //end panel-heading & form
 echo '<div class="panel-body">
@@ -55,10 +49,36 @@ echo '<div class="panel-body">
         </div>
       </div>
 
-'.'</div>
+';
+
+
+echo'</li>
+            <li class="list-group-item text-center">';
+echo '<div class="btn-group-sm">';
+echo '<a class="btn btn-warning fileinput-button">
+         <i class="fa fa-file-image-o fa-fw"></i>
+         <span>Add images...</span>';
+echo '<input type="file" name="files" multiple="multiple" accept="image/*" id="files">';
+echo '</a>';
+echo '<button class="btn btn-primary" id="submit">
+                    <i class="fa fa-cloud-upload fa-fw"></i>
+                    <span>Start upload</span>
+                </button>';
+echo'<button type="reset" class="btn btn-outline btn-default">
+                    <i class="fa fa-refresh fa-fw"></i>Refresh
+                </button>
+</div>
+            </li>
+        </ul>
+    <div class="panel panel-default" style="border: none;">';
+
+echo'</div>
+    </div>
+    <div class="col-sm-2"></div>
 </div>';
 
 ?>
+
 
 
 
