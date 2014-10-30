@@ -34,6 +34,12 @@ class Worker_controller extends Frontend_Controller{
         $this->render('worker','/index',$data);
     }
 
+    public  function view_worker($data = NULL){
+        $data['controller'] = 'worker_controller';
+        $data['action'] = '';
+        $data['module'] = 'worker';
+        $this->render('worker','/worker',$data);
+    }
 
 
 }

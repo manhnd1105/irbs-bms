@@ -29,18 +29,18 @@ echo '<li><a href="#collapseEmail" data-toggle="collapse" data-parent="#accordio
     .'<div id="collapseEmail" class="panel-collapse collapse">'
     .'<ul class="nav nav-second-level">';
 echo '<li>' . anchor('/email/email_controller/view_email','Test sender','class="active"').'</li>';
-echo '<li>' . anchor('/email/email_controller/view_email','<i class="fa fa-cog fa-fw"></i>Email Config','class="active"').'</li>';
+echo '<li>' . anchor('/email/email_controller/view_config','<i class="fa fa-cog fa-fw"></i>Inkiu Email Config','class="active"').'</li>';
+echo '</ul>'
+    .'</div>'
+    .'</li>';
+
+echo '<li><a href="#collapseWorker" data-toggle="collapse" data-parent="#accordion"><i class="fa fa-users fa-fw"></i> Worker pages<i class="pull-right fa fa-plus"></i></a>'
+    .'<div id="collapseWorker" class="panel-collapse collapse">'
+    .'<ul class="nav nav-second-level">';
+echo '<li>' . anchor('worker/worker_controller/index','<i class="fa fa-user-md fa-fw"></i>Manager') . '</li>';
+echo '<li>' . anchor('worker/worker_controller/view_worker','<i class="fa fa-user fa-fw"></i>Worker') . '</li>';
 echo '</ul>'
     .'</div>'
     .'</li>';
 
 echo '<li>' . anchor('comment/comment_controller/index','<i class="fa fa-comments fa-fw"></i>Comments page','class="active"').'</li>';
-
-
-echo '<li><a href="#collapseWorker" data-toggle="collapse" data-parent="#accordion"><i class="fa fa-users fa-fw"></i> Worker pages<i class="pull-right fa fa-plus"></i></a>'
-    .'<div id="collapseWorker" class="panel-collapse collapse">'
-    .'<ul class="nav nav-second-level">';
-echo '<li>' . anchor('worker/worker_controller/index','<i class="fa fa-user-md fa-fw"></i>Worker Manager') . '</li>';
-echo '</ul>'
-    .'</div>'
-    .'</li>';

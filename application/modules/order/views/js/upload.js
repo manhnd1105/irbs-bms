@@ -59,7 +59,7 @@ $(document).ready(function(){
     $('#submit').on('click',function(event){
         event.preventDefault();
         $.ajax({
-            url: 'http://localhost/irbs-bms/index.php/order/upload_controller/upload',
+            url: base_url+'index.php/order/upload_controller/upload',
             type: "POST",
             data: formdata,
             processData: false,

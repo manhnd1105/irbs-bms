@@ -1,3 +1,6 @@
+<script type="text/javascript">
+    base_url = '<?=base_url()?>';
+</script>
 
 <?php
 echo "<script src='" . base_url() . "application/modules/order/views/js/upload.js'></script>";

@@ -69,6 +69,17 @@ class Email_controller extends Frontend_Controller
     /**
      *
      */
+    public function view_config()
+    {
+        $data['controller'] = 'email_controller';
+        $data['action'] = 'send_email';
+        $data['module'] = 'email';
+        $this->template_controller->demo_template('email', '/config', $data);
+    }
+
+    /**
+     *
+     */
     public function send_email()
     {
         //fix $message html data
