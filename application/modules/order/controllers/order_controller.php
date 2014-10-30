@@ -112,26 +112,86 @@ class Order_controller extends Frontend_Controller
     }
 
     /**
-     *
+     * Do prepare data for order list based on certain conditions
+     * Called by ajax from index view
      */
     public function filter()
     {
         //Get information from POST
         $post = $this->input->post();
 
-        //Ask factory to perform filter data
-        //If has info from POST => Load filtered data
-        if ($post !== null)
-        {
-            $info = $this->order_factory->filter($post);
+        //Filter orders of customers managed by a logged manager
+        //Check whether a manager has authorized
+        $acc_name = $this->session->userdata('acc_name');
+        if ($acc_name !== false) {
+            //Check manager role in external system
+            $req = new \super_classes\RestfulRequestMaker();
+            $role_id = $req->make_request('get', 'role_id', array(
+                'role_name' => 'manager'
+            ));
+            if (!$role_id)
+            {
+                throw new Exception('Role name is not valid');
+            }
+
+            //Get id of this account
+            $acc_id = $req->make_request('get', 'acc_id', array(
+                'acc_name' => $acc_name
+            ));
+            if (!$acc_id) {
+                throw new Exception('Cannot retrieve account id');
+            }
+
+            //Check whether this authenticated account has role of manager
+            $result = $req->make_request('get', 'check_role', array(
+                'acc_id' => $acc_id,
+                'role_id' => $role_id
+            ));
+            //If is manager => do list all orders created by customers managed by this manager
+            if ($result) {
+                //List all customers managed by this manager
+                $cuss = $req->make_request('get', 'children', array(
+                    'id' => $acc_id
+                ));
+                if (!$cuss) {
+                    throw new Exception('Cannot retrieve customers managed by this manager');
+                }
+
+                //List all orders created by those customers
+                $info = array();
+                foreach ($cuss as $cus) {
+                    $info[] = $this->order_factory->load_acc_orders_info($cus['id']);
+                }
+            }
+            //If is not manager => list all orders or filtered orders
+            else {
+                //Ask factory to perform filter data
+                //If has info from POST => Load filtered data
+                if ($post !== null) {
+                    $info = $this->order_factory->filter($post);
+                } //If has no info from POST => Load all orders data
+                else {
+                    $info = $this->order_factory->load_orders_info();
+                }
+            }
         }
-        //If has no info from POST => Load all orders data
-        else
-        {
-            $info = $this->order_factory->load_orders_info();
+        else {
+            throw new Exception('You are not logged in');
         }
 
         //Transform data to html format for displaying as a partial view
+        $html = $this->convert_grid_html($info);
+
+        //Return filtered information to view
+        print($html);
+    }
+
+    /**
+     * Convert orders information into html table format
+     * @param $info
+     * @return string
+     */
+    private function convert_grid_html($info){
         $html = '';
         if (is_array($info)) {
             foreach ($info as $row) {
@@ -146,8 +206,7 @@ class Order_controller extends Frontend_Controller
                 $html .= '</tr>';
             }
         }
-        //Return filtered information to view
-        print($html);
+        return $html;
     }
 
     /**
