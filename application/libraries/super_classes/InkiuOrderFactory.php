@@ -183,6 +183,26 @@ class InkiuOrderFactory implements ISingleton
     }
 
     /**
+     * @param null $id
+     * @return array
+     */
+    public function load_order_imgs($id = null)
+    {
+        $where = array('t1.id = t2.order_id');
+        $return_type = 'all';
+        if ($id !== null) {
+            $where[] = "t2.id = {$id}";
+            $return_type = 'one';
+        }
+        return $this->model_order->get_joined_tables(
+            $where,
+            '*',
+            $return_type,
+            'irbs.order AS t1, irbs.order_detail AS t2'
+        );
+    }
+
+    /**
      * Private clone method to prevent cloning of the instance of the
      * *Singleton* instance.
      *

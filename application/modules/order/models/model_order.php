@@ -223,6 +223,30 @@ class Model_order
         }
         return true;
     }
+
+    public function get_joined_tables(
+        $where = null,
+        $required_fields = '*',
+        $return_type = 'all',
+        $tables
+    ) {
+        if ($where !== null) {
+            foreach ($where as $row) {
+                $this->db->where($row);
+            }
+        }
+        $this->db->select($required_fields);
+        $this->db->from($tables);
+        $result = array();
+        switch ($return_type) {
+            case 'all':
+                $result = $this->db->get()->result_array();
+                break;
+            case 'one':
+                $result = $this->db->get()->row_array();
+        }
+        return $result;
+    }
 }
 
 /**

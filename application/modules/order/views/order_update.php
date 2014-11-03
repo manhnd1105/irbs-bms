@@ -9,7 +9,7 @@ echo form_hidden('id', $order_info['id']);
 
 
 echo '<div class="form-group-sm">';
-echo form_label('Order description');
+echo form_label('Description');
 echo form_input('description', $order_info['description']);
 echo form_error('description');
 echo '</div>';

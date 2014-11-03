@@ -4,22 +4,22 @@
 
 <?php
 echo "<script src='" . base_url() . "assets/js/jquery.js'></script>";
-echo "<script src='" . base_url() . "application/modules/order/views/js/index.js'></script>";
+//echo "<script src='" . base_url() . "application/modules/order/views/js/index.js'></script>";
 
 
 echo '<div>&nbsp;</div>';
 echo '<div>&nbsp;</div>';
 echo '<div>&nbsp;</div>';
 
-echo form_label('ID');
-echo form_input('id', '', "id='id'");
-echo form_label('Description');
-echo form_input('desc', '', "id='desc'");
-echo form_label('Creation Date');
-echo form_input('creation_date', '', "id='creation_date'");
-echo form_label('Creator');
-echo form_input('creator', '', "id='creator'");
-echo form_button('btn_filter', 'OK', "id='btn_filter'");
+//echo form_label('ID');
+//echo form_input('id', '', "id='id'");
+//echo form_label('Description');
+//echo form_input('desc', '', "id='desc'");
+//echo form_label('Creation Date');
+//echo form_input('creation_date', '', "id='creation_date'");
+//echo form_label('Creator');
+//echo form_input('creator', '', "id='creator'");
+//echo form_button('btn_filter', 'OK', "id='btn_filter'");
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">Order Management</div>';
@@ -34,17 +34,23 @@ echo '<td> Action</td>';
 
 echo '</tr>';
 
-//foreach ($info as $row) {
-//    $order_id = $row['id'];
-//
-//    echo '<tr class="success"">';
-//    echo '<td >' . $row['id'] . '</td>';
-//    echo '<td >' . $row['description'] . '</td>';
-//    echo '<td>' . $row['creation_date'] . '</td>';
-//    echo '<td>' . $row['creator'] . '</td>';
-//    echo '<td>' . anchor('order/order_controller/view_create', 'Create'), '|', anchor('order/order_controller/view_update/' . $order_id, 'Edit'), '|', anchor('order/order_controller/delete/' . $order_id, 'Remove') . '</td>';
-//
-//    echo '</tr>';
+//if (isset($info)) {
+$i = 1;
+    foreach ($info as $row) {
+        $order_id = $row['id'];
+        if ($i % 2 == 1) {
+            echo '<tr class="success">';
+        } else {
+            echo '<tr>';
+        }
+        echo '<td >' . $row['id'] . '</td>';
+        echo '<td >' . $row['description'] . '</td>';
+        echo '<td>' . $row['creation_date'] . '</td>';
+        echo '<td>' . $row['creator'] . '</td>';
+        echo '<td>' . anchor('order/order_controller/view_update/' . $order_id, 'View/Edit'), ' | ', anchor('order/order_controller/delete/' . $order_id, 'Remove') . '</td>';
+        echo '</tr>';
+        $i++;
+    }
 //}
 
 

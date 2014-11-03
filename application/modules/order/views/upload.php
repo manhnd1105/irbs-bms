@@ -17,11 +17,15 @@ echo
             <li class="list-group-item">';
 
 
-/** @var $module string */
-/** @var $controller string */
-/** @var $action string */
+/** @var $module string
+ *  @var $controller string
+ *  @var $action string
+ *  @var $desc string
+ */
 echo form_open($module . '/' . $controller . '/' . $action,'enctype="multipart/form-data" id="uploadForm"');
-
+if (isset($desc)) {
+    echo form_hidden('desc', $desc);
+}
 echo '<div class="panel-heading">
         </div>';
 //end panel-heading & form
@@ -41,6 +45,7 @@ echo '<div class="panel-body">
                             <td class="text-center"><strong>Size</strong></td>
                             <td class="text-center"><strong>Uploaded</strong></td>
                             <td class="text-center"><strong>Action</strong></td>
+                            <td class="text-center"><strong>Link</strong></td>
                         </tr>
                     </thead>
                     </table>
@@ -64,9 +69,7 @@ echo '<button class="btn btn-default" id="submit">
                     <i class="fa fa-cloud-upload fa-fw"></i>
                     <span>Start upload</span>
                 </button>';
-echo'<button type="reset" class="btn btn-outline btn-default">
-                    <i class="fa fa-refresh fa-fw"></i>Refresh
-                </button>
+echo'<button class="btn btn-default" type="submit" id="btn_create">Next &NestedGreaterGreater;</button>
 </div>
             </li>
         </ul>
@@ -76,8 +79,6 @@ echo'</div>
     </div>
     <div class="col-sm-2"></div>
 </div>';
-
-?>
 
 
 

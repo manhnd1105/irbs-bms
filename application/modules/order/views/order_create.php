@@ -18,7 +18,7 @@ echo '
             <li class="list-group-item">
                 <span class="pull-left text-muted small"><i class="fa fa-pencil fa-fw"></i> Write information here</span><br/>
                 <div class="form-group">
-                    <input class="form-control" placeholder="Enter text"/>
+                    <input name ="desc" class="form-control" placeholder="Enter text"/>
                 </div>
             </li>
             <li class="list-group-item text-center">
@@ -29,7 +29,6 @@ echo '
     <div class="col-sm-2"></div>
 </div>
 ';
-?>
 
 
 

@@ -87,11 +87,11 @@ class Order_controller extends Frontend_Controller
     public function index()
     {
  		//Get all orders information for displaying
-//        $info = $this->order_factory->load_orders_info();
+        $info = $this->order_factory->load_orders_info();
 
         //Ask view to render with obtained data
-//        $data['info'] = $info;
-        $this->render('order', '/index');
+        $data['info'] = $info;
+        $this->render('order', '/index', $data);
     }
 
     /**

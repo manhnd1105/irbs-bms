@@ -9,11 +9,12 @@
 echo '<li>' . anchor('order/order_controller/index','Manage Order','class="active"').'</li>';
 echo '<li>' . anchor('order/order_controller/view_create', 'Create Order','class="active"') . '</li>';
 echo '<li>' . anchor('order/order_controller/view_progress', 'Progress','class="active"') . '</li>';
-echo '<li>' . anchor('order/order_controller/view_payment', 'Payment','class="active"') . '</li>';
-echo '<li>' . anchor('order/order_controller/view_crud_custom', 'Order Custom View','class="active"') . '</li>';
+//echo '<li>' . anchor('order/order_controller/view_payment', 'Payment','class="active"') . '</li>';
+//echo '<li>' . anchor('order/order_controller/view_crud_custom', 'Order Custom View','class="active"') . '</li>';
 echo '<li>' . anchor('order/order_controller/view_order_tracking', 'Order Tracking','class="active"') . '</li>';
-echo '<li>' . anchor('price_list/price_controller/view_price', 'View Price','class="active"') . '</li>';
-echo '<li>' . anchor('order/detail_controller', 'Assign workers','class="active"') . '</li>';
+//echo '<li>' . anchor('price_list/price_controller/view_price', 'View Price','class="active"') . '</li>';
+echo '<li>' . anchor('order/detail_controller', 'Manager - Assign workers','class="active"') . '</li>';
+echo '<li>' . anchor('order/img_controller', 'Reviewer - Manage images','class="active"') . '</li>';
 echo '<li>' . anchor('reviewer/review_controller/view_order','<i class="fa fa-usd fa-fw"></i>Review Image','class="active"').'</li>';
 
 echo '<li><a href="#collapseUpload" data-toggle="collapse" data-parent="#accordion"><i class="fa fa-cloud-upload fa-fw"></i> Upload pages<i class="pull-right fa fa-plus"></i></a>'
