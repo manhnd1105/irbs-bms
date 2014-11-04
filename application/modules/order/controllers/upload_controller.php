@@ -20,8 +20,11 @@ class Upload_controller extends Frontend_Controller
     public function view_upload()
     {
         $post = $this->input->post();
-        if (isset($post['desc'])) {
-            $data['desc'] = $post['desc'];
+        if (isset($post['name'])&&isset($post['email'])&&isset($post['phone'])&&isset($post['address'])){
+            $data['name'] = $post['name'];
+            $data['email'] = $post['email'];
+            $data['phone'] = $post['phone'];
+            $data['address'] = $post['address'];
         }
 
         $data['controller'] = 'upload_controller';
@@ -37,9 +40,8 @@ class Upload_controller extends Frontend_Controller
     {
         if (!empty($_FILES['files'])) {
             $status = $this->save_files();
-            var_dump($status);
             if ($status) {
-                echo 'File was saved !';
+                $this->view_payment();
             }
         } else {
             echo 'Please choose your images !';
@@ -139,10 +141,10 @@ class Upload_controller extends Frontend_Controller
     {
         if (!empty($_FILES['files'])) {
             $status = $this->save_files();
-            var_dump($status);
-//            if($status){
-//                echo 'File was saved !';
-//            }
+            //var_dump($status);
+            if($status){
+                $this->view_payment();
+            }
         } else {
             $this->view_mobile_upload();
         }
@@ -161,6 +163,22 @@ class Upload_controller extends Frontend_Controller
     {
         $msg = $_POST['fms_reply'];
         var_dump($msg);
+    }
+
+    public function view_payment(){
+//        $post = $this->input->post();
+//        if (isset($post['name'])&&isset($post['email'])&&isset($post['phone'])&&isset($post['address'])){
+//            $data['name'] = $post['name'];
+//            $data['email'] = $post['email'];
+//            $data['phone'] = $post['phone'];
+//            $data['address'] = $post['address'];
+//        }
+
+        $data['controller'] = 'upload_controller';
+        $data['action'] = 'upload';
+        $data['module'] = 'order';
+
+        $this->template_controller->demo_template('order', '/payment', $data);
     }
 
 }

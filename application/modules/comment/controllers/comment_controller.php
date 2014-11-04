@@ -31,7 +31,10 @@ class Comment_controller extends  Frontend_Controller{
         }
 
         //fixed $reviewer_id data
-        $this->reviewer_id = 1;
+        //$acc_name = $this->session->userdata('acc_name');
+        //$acc_id = $this->session->userdata('acc_id');
+
+        $this->reviewer_id = $this->session->userdata('acc_id');
     }
 
     /**

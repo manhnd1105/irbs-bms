@@ -7,6 +7,7 @@
 <script type="text/javascript" src="<?php echo base_url() . "assets/js/jquery.js"; ?>"></script>
 <script type="text/javascript" src="<?php echo base_url() . "assets/js/bootstrap.js"; ?>"></script>
 <script type="text/javascript" src="<?php echo base_url() . "assets/js/bootstrap-datetimepicker.js"; ?>"></script>
+<script type="text/javascript" src="<?php echo base_url() . "assets/js/jquery.form.min.js"; ?>"></script>
 
 <!--Navigation-->
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
