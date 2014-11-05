@@ -188,7 +188,10 @@ class InkiuOrderFactory implements ISingleton
      */
     public function load_order_imgs($id = null)
     {
-        $where = array('t1.id = t2.order_id');
+        $where = array(
+            't1.id = t2.order_id',
+            't2.status_id = t3.id'
+        );
         $return_type = 'all';
         if ($id !== null) {
             $where[] = "t2.id = {$id}";
@@ -198,7 +201,7 @@ class InkiuOrderFactory implements ISingleton
             $where,
             '*',
             $return_type,
-            'irbs.order AS t1, irbs.order_detail AS t2'
+            'irbs.order AS t1, irbs.order_detail AS t2, irbs.order_component_status AS t3'
         );
     }
 

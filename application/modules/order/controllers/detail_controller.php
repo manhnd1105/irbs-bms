@@ -29,12 +29,12 @@ class Detail_controller extends Frontend_Controller
         $orders = $this->order_factory->load_orders_info();
 
         //List workers
-        $request = new \super_classes\RestfulRequestMaker('http://localhost/irbs-ams/index.php/api/api_controller/');
+        $request = new \super_classes\RestfulRequestMaker($this->config->item('ams_path') . '/api/api_controller/');
         $workers = $request->make_request(
             'get',
             'children',
             array(
-                'id' => '8'
+                'acc_id' => '8'
             )
         );
 
@@ -61,7 +61,6 @@ class Detail_controller extends Frontend_Controller
     {
         //Get information from POST
         $post = $this->input->post();
-
         //Ask factory to perform assigning worker
         $status = $this->order_factory->assign_worker($post['order_id'], $post['acc_id']);
 

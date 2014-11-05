@@ -35,7 +35,7 @@ $i = 1;
         echo '<td >' . $row['id'] . '</td>';
         echo '<td >' . $row['description'] . '</td>';
         echo '<td>' . $row['file_changed_path'] . '</td>';
-        echo '<td>' . $row['file_status'] . '</td>';
+        echo '<td>' . $row['name'] . '</td>';
         echo '<td>' . anchor('order/img_controller/view_approve/' . $row['id'], 'Approve') . '</td>';
         echo '</tr>';
         $i++;

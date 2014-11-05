@@ -2,19 +2,21 @@
  * Created by manh on 10/22/14.
  */
 $(function () {
-    $('.order_info').click(function () {
-        $('#order_id').val(this.a_attr.entity_id);
-    });
-    $('.acc_info').click(function () {
-        $('#acc_id').val(this.a_attr.entity_id);
-    });
     $('#btn_assign').click(function () {
+        var order_list = new Array();
+        var acc_list = new Array();
+        $('input[name="order_list[]"]:checked').each(function () {
+            order_list.push(this.value);
+        });
+        $('input[name="acc_list[]"]:checked').each(function () {
+            acc_list.push(this.value);
+        });
         $.ajax({
             'url': base_url + 'index.php/order/detail_controller/assign_worker',
             'type': 'POST',
             'data': {
-                'order_id': $('#order_id').val(),
-                'acc_id': $('#acc_id').val()
+                'order_id': order_list[0],
+                'acc_id': acc_list[0]
             },
             'success': function (xhr) {
                 $('#event_result').html(xhr);

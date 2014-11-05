@@ -389,7 +389,8 @@ $config['site_open'] = true;
 //Forbid unauthorized users to access features of website (except login)
 $config['restrict_unauthorized'] = false;
 
-$host = 'http://192.168.56.101';
+//$host = 'http://192.168.56.101';
+$host = 'http://localhost';
 $config['ams_path'] = $host . '/irbs-ams/index.php';
 $config['cms_path'] = $host . '/irbs-cms/index.php';
 $config['fms_path'] = $host . '/irbs-fms/index.php';
