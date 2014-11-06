@@ -390,6 +390,7 @@ $config['site_open'] = true;
 $config['restrict_unauthorized'] = false;
 
 //$host = 'http://192.168.56.101';
+//$host = 'http://123.30.238.216';
 $host = 'http://localhost';
 $config['ams_path'] = $host . '/irbs-ams/index.php';
 $config['cms_path'] = $host . '/irbs-cms/index.php';
