@@ -84,6 +84,7 @@ class InkiuOrderFactory implements ISingleton
         $order->set_creator($info);
         $order->set_id($info);
 
+        $order->set_img_links(json_decode($info['img_links']));
         //Setup its components
         /* 		$component_image = Order_component_image_factory::create_component_image($info);
                 $component_feedback = Order_component_feedback_factory::create_component_feedback($info);
@@ -175,11 +176,23 @@ class InkiuOrderFactory implements ISingleton
     }
 
     /**
+     * @param bool $load_detail
      * @return mixed
      */
-    public function load_orders_info()
+    public function load_orders_info($load_detail = false)
     {
-        return $this->model_order->get_order();
+        $conditions = array(
+            'irbs.order AS t1, irbs.inkiu_order AS t2',
+            array(
+                't1.id = t2.id',
+            )
+        );
+        if ($load_detail) {
+            $conditions[0] .= ', irbs.order_detail AS t3';
+            $conditions[1][] = 't2.id = t3.order_id';
+        }
+//        return $this->model_order->get_order();
+        return $this->model_order->read_multi_tables($conditions);
     }
 
     /**
@@ -202,6 +215,20 @@ class InkiuOrderFactory implements ISingleton
             '*',
             $return_type,
             'irbs.order AS t1, irbs.order_detail AS t2, irbs.order_component_status AS t3'
+        );
+    }
+
+    public function load_order_info($order_id)
+    {
+        return $this->model_order->read_multi_tables(
+            'irbs.order AS t1, irbs.order_detail AS t3, irbs.inkiu_order AS t2',
+            array(
+                't1.id = t2.id',
+                't2.id = t3.order_id',
+                "t1.id = {$order_id}"
+            ),
+            '*',
+            'one'
         );
     }
 

@@ -1,8 +1,9 @@
 <?php
-
-/** @var $module string */
-/** @var $controller string */
-/** @var $action string */
+/**
+ * @var $module string
+ * @var $controller string
+ * @var $action string
+*/
 
 echo form_open($module . '/' . $controller . '/' . $action);
 echo '
@@ -16,21 +17,9 @@ echo '
                 '.base_url().'application/modules/order/views/img/step1.png'.'" class="img-responsive"/><br/>
             </li>
             <li class="list-group-item">
-                <span class="pull-left text-info small"><i class="fa fa-user fa-fw"></i>Enter your name:</span><br/>
+                <span class="pull-left text-info small"><i class="fa fa-user fa-fw"></i>Description:</span><br/>
                 <div class="form-group">
-                    <input name ="name" class="form-control" placeholder="etc: John Smith,.."/>
-                </div>
-                <span class="pull-left text-info small"><i class="fa fa-envelope fa-fw"></i>Email:</span><br/>
-                <div class="form-group">
-                    <input name ="email" class="form-control" placeholder="etc: John@example.com"/>
-                </div>
-                <span class="pull-left text-info small"><i class="fa fa-mobile fa-fw"></i>Phone number:</span><br/>
-                <div class="form-group">
-                    <input name ="phone" class="form-control" placeholder="etc: 097191927"/>
-                </div>
-                <span class="pull-left text-info small"><i class="fa fa-map-marker fa-fw"></i>Address:</span><br/>
-                <div class="form-group">
-                    <input name ="address" class="form-control" placeholder="..."/>
+                    <input name ="desc" class="form-control" placeholder="etc: Your requirements..."/>
                 </div>
             </li>
             <li class="list-group-item text-center">

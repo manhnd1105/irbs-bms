@@ -60,6 +60,29 @@ class Model_order
         return $result;
     }
 
+    public function read_multi_tables(
+        $tables,
+        $where = null,
+        $required_fields = '*',
+        $return_type = 'all'
+    ) {
+        if ($where !== null) {
+            foreach ($where as $row) {
+                $this->db->where($row);
+            }
+        }
+        $this->db->select($required_fields);
+        $this->db->from($tables);
+        $result = array();
+        switch ($return_type) {
+            case 'all':
+                $result = $this->db->get()->result_array();
+                break;
+            case 'one':
+                $result = $this->db->get()->row_array();
+        }
+        return $result;
+    }
     /**
      * Insert new record
      * @param $info
@@ -81,6 +104,14 @@ class Model_order
             $inkiu_order_data = new inkiu_order_table($info);
             $this->db->insert('irbs.inkiu_order', $inkiu_order_data);
 
+            //Insert into order_detail table
+            foreach ($info['img_links'] as $row) {
+                $this->db->insert('irbs.order_detail', array(
+                    'order_id' => $id,
+                    'status_id' => '1',
+                    'file_path' => $row
+                ));
+            }
             $this->db->trans_complete();
         } catch (Exception $e)
         {

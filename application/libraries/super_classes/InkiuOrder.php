@@ -8,6 +8,7 @@ namespace super_classes;
  */
 class InkiuOrder extends Order
 {
+    var $_img_links;
     /**
      * @var
      */
@@ -37,6 +38,11 @@ class InkiuOrder extends Order
         $this->_id = $this->init_set($info, 'id');
     }
 
+    public function set_img_links($info)
+    {
+        $this->_img_links = $info;
+    }
+
     /**
      * @return mixed
      */
@@ -55,7 +61,8 @@ class InkiuOrder extends Order
             'creation_date' => $this->_creation_date,
             'description' => $this->_description,
             'components' => $this->_components,
-            'id' => $this->_id
+            'id' => $this->_id,
+            'img_links' => $this->_img_links
         );
         return $props;
     }

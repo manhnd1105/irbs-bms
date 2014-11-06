@@ -29,9 +29,23 @@ class Order_controller extends Frontend_Controller
     public function create()
     {
         $post = $this->input->post();
-
+//       print_r(json_decode($post['img_links']));
  		//Ask factory to create obj
         $status = $this->order_factory->create_order($post);
+
+        print($status);
+    }
+
+//create view upload
+    public function view_upload()
+    {
+        $post = $this->input->post();
+        if (isset($post['desc'])) {
+            $data['desc'] = $post['desc'];
+        }
+        $data['creator'] = $this->session->userdata('acc_name');
+
+        $this->template_controller->demo_template('order', '/upload', $data);
     }
 
     /**
@@ -64,7 +78,7 @@ class Order_controller extends Frontend_Controller
     public function view_create()
     {
         //Ask view to render data
-        $data['controller'] = 'upload_controller';
+        $data['controller'] = 'order_controller';
         $data['action'] = 'view_upload';
         $data['module'] = 'order';
 
@@ -100,7 +114,7 @@ class Order_controller extends Frontend_Controller
     public function view_update($order_id)
     {
         //Get all saved information according to this account id
-        $info = $this->order_factory->load_orders_info($order_id);
+        $info = $this->order_factory->load_order_info($order_id);
 
         //Load view with above data
         $data['order_info'] = $info;

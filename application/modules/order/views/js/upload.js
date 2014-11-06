@@ -2,37 +2,36 @@
  * Created by Tuan Long on 10/3/2014.
  */
 
-$(document).ready(function(){
+$(document).ready(function () {
 
     var formdata = false;
 
-    if(window.FormData){
+    if (window.FormData) {
         formdata = new FormData();
     }
 
-    function showUploadImage(source,content){
+    function showUploadImage(source, content) {
         //var images = document.getElementById('upload_image');
-        content.innerHTML += '<div class="col-sm-3"><a href="#" class="thumbnail"><img src="'+source+'"/></a></div>';
+        content.innerHTML += '<div class="col-sm-3"><a href="#" class="thumbnail"><img src="' + source + '"/></a></div>';
     }
 
-    function showUploadInfo(file,content,index){
+    function showUploadInfo(file, content, index) {
         var size = bytesToSize(file.size);
-        //var info = document.getElementById('upload_image');
+        var remove = function () {
+            console.log('remove button clicked');
+        };
         content.innerHTML += '<div class="col-sm-9">' +
-        '<div class= "well">'+
-        //'<span class="pull-left text-muted small">Name:</span>' +
-        //'<span class="text-info">'+index+'</span>' +
-        '<span class="pull-left text-muted small">Name:</span>' +
-        '<span class="text-info">'+file.name+'</span>' +
-        '<button class="btn btn-xs btn-default pull-right" type="button" onclick="remove()">remove</button><br/>' +
-        '<span class="pull-left text-muted small">Size:</span>' +
-        '<span class="text-info">'+size+'</span><br/>' +
-        '</div>'+
+        '<div class= "well">' +
+        '<span class="pull-left">Name:</span>' +
+        '<span class="text-info">' + file.name + '</span>' +
+        '<button class="btn btn-xs btn-default pull-right btn_remove" type="button" onclick="\nconsole.log(\'remove button clicked\');\n">remove</button><br/>' +
+        '<span class="pull-left">Size:</span>' +
+        '<span class="text-info">' + size + '</span><br/>' +
+        '</div>' +
         '</div>';
-    }
-
-    function remove(){
-        alert('dsdsadsa');
+        $('.btn_remove').click(function () {
+            console.log('remove button clicked');
+        });
     }
 
     //function to format bites bit.ly/19yoIPO
@@ -44,14 +43,14 @@ $(document).ready(function(){
     }
 
     // load progressbar
-    function progressbarUpload(event){
+    function progressbarUpload(event) {
         var percent = event.loaded / event.total * 100;
         var progress = $('.progress');
-        progress.css('display','block');
+        progress.css('display', 'block');
         var bar = $('.progress-bar');
-        bar.attr('aria-valuenow',percent);
-        bar.css('width',percent+'%');
-        bar.html(percent+'%');
+        bar.attr('aria-valuenow', percent);
+        bar.css('width', percent + '%');
+        bar.html(percent + '%');
         //var progress = $('.progress');
         //progress.css('display','block');
         //var bar = $('.progress-bar');
@@ -65,91 +64,107 @@ $(document).ready(function(){
     }
 
     // show information file upload
-    $('#files').on('change',(function(event){
+    $('#files').on('change', (function (event) {
         event.preventDefault();
         var i = 0;
         var content = document.getElementById('upload_image');
-        for( ; i< this.files.length; i++){
+        for (; i < this.files.length; i++) {
             var file = this.files[i];
             content.innerHTML += '<div class="row">';
-            if(file.type.match(/image.*/)){
-                var index = i+1;
-                if(window.FileReader){
+            if (file.type.match(/image.*/)) {
+                var index = i + 1;
+                if (window.FileReader) {
                     var reader = new FileReader();
-                    reader.onloadend = function(e){
-                        showUploadImage(e.target.result,content);
+                    reader.onloadend = function (e) {
+                        showUploadImage(e.target.result, content);
                     };
                     reader.readAsDataURL(file);
-                    showUploadInfo(file,content,index);
+                    showUploadInfo(file, content, index);
                 }
 
-                if(formdata){
-                    formdata.append('files[]',file);
+                if (formdata) {
+                    formdata.append('files[]', file);
                 }
             }
             content.innerHTML += '</div>';
         }
     }));
-
+    var array_links = new Array();
     //upload file to server
-    $('#submit').on('click',function(event){
+    $('#btn_submit_upload').on('click', function (event) {
         event.preventDefault();
-        var btn_addfile = document.getElementById('files');
-        var btn_upload= document.getElementById('submit');
-        var progress = $('.progress');
-        progress.css('display','block');
-        var bar = $('.progress-bar');
+        //var btn_addfile = document.getElementById('files');
+        //var btn_upload = document.getElementById('submit');
+        //var progress = $('.progress');
+        //progress.css('display', 'block');
+        //var bar = $('.progress-bar');
         $.ajax({
-            url: base_url+'index.php/order/upload_controller/upload',
+            //url: base_url + 'index.php/order/upload_controller/upload',
+            url: 'http://localhost/irbs-fms/index.php/file/image_controller/fms_receiver',
             type: "POST",
             data: formdata,
             processData: false,
             contentType: false,
-            beforeSend: function(){
-                btn_addfile.setAttribute('disabled','disabled');
-                btn_upload.setAttribute('disabled','disabled');
-            },
-            /* progress bar call back*/
-            uploadProgress: function(event, position, total, percentComplete) {
-                var percent = percentComplete + '%';
-                bar.attr('aria-valuenow',percentComplete);
-                bar.css('width',percent);
-                bar.html(percent);
-            },
+            //beforeSend: function () {
+            //    btn_addfile.setAttribute('disabled', 'disabled');
+            //    btn_upload.setAttribute('disabled', 'disabled');
+            //},
+            ///* progress bar call back*/
+            //uploadProgress: function (event, position, total, percentComplete) {
+            //    var percent = percentComplete + '%';
+            //    bar.attr('aria-valuenow', percentComplete);
+            //    bar.css('width', percent);
+            //    bar.html(percent);
+            //},
 
             /* complete call back */
-            complete: function(data) {
-                progress.css('display','none');
-            },
-            success: function (res) {
+            //complete: function (data) {
+            //    progress.css('display', 'none');
+            //},
+            success: function (img_links) {
+                console.log('Called back image links: ' + img_links);
+                //for (var i = 0; i < img_links.length; i++) {
+                //    array_links.push(JSON.stringify(img_links[i]));
+                //}
+                //array_links = img_links;
+                $('#image_links').val(img_links);
+                //$('#uploaded_image').html(img_links);
                 //alert.html(res).fadeIn();
                 //$('#files').trigger('reset');
                 //$('#submit').html('Start upload');
-                window.location.href= base_url+'index.php/order/upload_controller/view_payment';
+                //window.location.href = base_url + 'index.php/order/upload_controller/view_payment';
             },
-            error: function(e) {
-                console.log(e)
+            error: function (e) {
+                console.log('error ' + e);
             }
-
         });
-
     });
 
-    $('#test').on('click',function(event){
-       //var progress = $('.progress');
-       //progress.css('display','block');
-       //var bar = $('.progress-bar');
-       //var i = 0;
-       //for( ; i<=100; i++){
-       //
-       //    bar.attr('aria-valuenow',i);
-       //    bar.css('width',i+'%');
-       //    bar.html(i+'%');
-       //}
-        var loaded = event.loaded;
-        alert ('sdsd'+loaded);
+    $('#btn_submit').click(function () {
+        console.log('Button submit clicked');
+        $.ajax({
+            'url': base_url + 'index.php/order/order_controller/create',
+            'type': 'POST',
+            //'dataType': 'json',
+            'data': {
+                'description': $("#desc").val(),
+                'creation_date': $("#creation_date").val(),
+                'creator': $("#creator").val(),
+                'img_links': $('#image_links').val()
+
+            },
+            'success': function (xhr) {
+                console.log('Order creation success');
+                console.log(xhr);
+
+                window.location.href = base_url + 'index.php/order/order_controller/';
+                alert('Order created ' + xhr);
+            },
+            'error': function (xhr, b, c) {
+                console.log('Order creation fail');
+                console.log(xhr + b + c);
+            }
+        });
     });
-
-
 });
 
