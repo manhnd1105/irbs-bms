@@ -11,15 +11,12 @@
 echo '<div>&nbsp;</div>';
 echo '<div>&nbsp;</div>';
 echo '<div>&nbsp;</div>';
-
-
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">Image Management</div>';
 echo "<div class='table-responsive' id='order_list'>";
 echo '<table class="table">';
 echo '<tr>';
-echo '<td> Id</td>';
-echo '<td> Description</td>';
+echo '<td> ID</td>';
 echo '<td> Link </td>';
 echo '<td> Status</td>';
 echo '</tr>';
@@ -33,10 +30,10 @@ $i = 1;
             echo '<tr>';
         }
         echo '<td >' . $row['id'] . '</td>';
-        echo '<td >' . $row['description'] . '</td>';
-        echo '<td>' . $row['file_changed_path'] . '</td>';
+        echo '<td>' . anchor($row['file_path'], substr($row['file_path'], 0, 30)) . '</td>';
         echo '<td>' . $row['name'] . '</td>';
         echo '<td>' . anchor('order/img_controller/view_approve/' . $row['id'], 'Approve') . '</td>';
+        echo '<td>' . anchor('order/img_controller/view_upload/' . $row['id'], 'Add version') . '</td>';
         echo '</tr>';
         $i++;
     }

@@ -84,7 +84,9 @@ class InkiuOrderFactory implements ISingleton
         $order->set_creator($info);
         $order->set_id($info);
 
-        $order->set_img_links(json_decode($info['img_links']));
+        if (isset($info['img_links'])) {
+            $order->set_img_links(json_decode($info['img_links']));
+        }
         //Setup its components
         /* 		$component_image = Order_component_image_factory::create_component_image($info);
                 $component_feedback = Order_component_feedback_factory::create_component_feedback($info);
@@ -181,18 +183,16 @@ class InkiuOrderFactory implements ISingleton
      */
     public function load_orders_info($load_detail = false)
     {
-        $conditions = array(
-            'irbs.order AS t1, irbs.inkiu_order AS t2',
-            array(
-                't1.id = t2.id',
-            )
-        );
-        if ($load_detail) {
-            $conditions[0] .= ', irbs.order_detail AS t3';
-            $conditions[1][] = 't2.id = t3.order_id';
+            $tables = 'irbs.order AS t1, irbs.inkiu_order AS t2';
+            $where = array(
+                't1.id = t2.id'
+            );
+        if ($load_detail === true) {
+            $tables .= ', irbs.order_detail AS t3';
+            $where[] = 't2.id = t3.order_id';
         }
 //        return $this->model_order->get_order();
-        return $this->model_order->read_multi_tables($conditions);
+        return $this->model_order->read_multi_tables($tables, $where);
     }
 
     /**
@@ -202,7 +202,7 @@ class InkiuOrderFactory implements ISingleton
     public function load_order_imgs($id = null)
     {
         $where = array(
-            't1.id = t2.order_id',
+//            't1.id = t2.order_id',
             't2.status_id = t3.id'
         );
         $return_type = 'all';
@@ -212,10 +212,39 @@ class InkiuOrderFactory implements ISingleton
         }
         return $this->model_order->get_joined_tables(
             $where,
-            '*',
+            't2.file_path, t3.name, t2.id, t2.file_changed_path',
             $return_type,
-            'irbs.order AS t1, irbs.order_detail AS t2, irbs.order_component_status AS t3'
+            'irbs.order_detail AS t2, irbs.order_component_status AS t3'
         );
+    }
+
+    public function load_order_img($id)
+    {
+        return $this->model_order->get_joined_tables(
+            array(
+                't2.status_id = t3.id',
+                "t2.id = {$id}"
+            ),
+            '*',
+            'one',
+            'irbs.order_detail AS t2, irbs.order_component_status AS t3'
+        );
+    }
+    public function get_img_links($order_id)
+    {
+        $rows = $this->model_order->get_joined_tables(
+            array(
+                "t3.order_id = {$order_id}"
+            ),
+            '*',
+            'all',
+            'irbs.order_detail AS t3'
+        );
+        $links = array();
+        foreach ($rows as $row) {
+            $links[] = $row['file_path'];
+        }
+        return $links;
     }
 
     public function load_order_info($order_id)
@@ -230,6 +259,50 @@ class InkiuOrderFactory implements ISingleton
             '*',
             'one'
         );
+    }
+
+    public function add_progress($info)
+    {
+        $result = array();
+        foreach ($info as $row) {
+            //Get quantity of total images of this order
+            $img = $this->model_order->get_joined_tables(
+                array(
+                    "t1.order_id = {$row['id']}"
+                ),
+                '*',
+                'all',
+                'irbs.order_detail AS t1'
+            );
+
+            //Get quantity of done images of this order
+            $done_img = $this->model_order->get_joined_tables(
+                array(
+                    't1.status_id = t2.id',
+                    't2.name = "done"',
+                    "t1.order_id = {$row['id']}"
+                ),
+                '*',
+                'all',
+                'irbs.order_detail AS t1, irbs.order_component_status AS t2'
+            );
+
+            //Calculate the progress percentage
+            $done = count($done_img);
+            $total = count($img);
+            if ($done == 0 || $total == 0) {
+                $row['progress'] = '0%';
+            } else {
+                $row['progress'] = (count($done_img) / count($img)). '%';
+            }
+            $result[] = $row;
+        }
+        return $result;
+    }
+
+    public function update_img_path($info)
+    {
+        return $this->model_order->update_img_path($info['id'], $info['file_changed_path']);
     }
 
     /**

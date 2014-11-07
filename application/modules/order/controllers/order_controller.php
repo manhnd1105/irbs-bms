@@ -8,6 +8,7 @@
 class Order_controller extends Frontend_Controller
 {
 
+
     /**
      * @var super_classes\InkiuOrderFactory
      */
@@ -20,6 +21,7 @@ class Order_controller extends Frontend_Controller
     {
         parent::__construct();
         $this->order_factory = \super_classes\InkiuOrderFactory::get_instance();
+
         $this->load->module('template/template_controller');
     }
 
@@ -29,8 +31,8 @@ class Order_controller extends Frontend_Controller
     public function create()
     {
         $post = $this->input->post();
-//       print_r(json_decode($post['img_links']));
- 		//Ask factory to create obj
+
+        //Ask factory to create obj
         $status = $this->order_factory->create_order($post);
 
         print($status);
@@ -56,10 +58,34 @@ class Order_controller extends Frontend_Controller
         //Get information from POST
         $post = $this->input->post();
 
- 		//Ask factory to load obj
-        $status = $this->order_factory->load_orders($post['order_id']);
+        //Ask factory to load obj
+        $status = $this->order_factory->update_order($post);
 
         $this->index();
+    }
+
+    /**
+     *
+     */
+    public function index()
+    {
+        //Get all orders information for displaying
+        $info = $this->order_factory->load_orders_info();
+        $info = $this->order_factory->add_progress($info);
+
+        //Ask view to render with obtained data
+        $data['info'] = $info;
+        $this->render('order', '/index', $data);
+    }
+
+    /**
+     * @param      $module
+     * @param      $method
+     * @param null $data
+     */
+    private function render($module, $method, $data = null)
+    {
+        $this->template_controller->demo_template($module, $method, $data);
     }
 
     /**
@@ -86,29 +112,6 @@ class Order_controller extends Frontend_Controller
     }
 
     /**
-     * @param      $module
-     * @param      $method
-     * @param null $data
-     */
-    private function render($module, $method, $data = NULL)
-    {
-        $this->template_controller->demo_template($module, $method, $data);
-    }
-
-    /**
-     *
-     */
-    public function index()
-    {
- 		//Get all orders information for displaying
-        $info = $this->order_factory->load_orders_info();
-
-        //Ask view to render with obtained data
-        $data['info'] = $info;
-        $this->render('order', '/index', $data);
-    }
-
-    /**
      * @param $order_id
      */
     public function view_update($order_id)
@@ -118,8 +121,9 @@ class Order_controller extends Frontend_Controller
 
         //Load view with above data
         $data['order_info'] = $info;
+        $data['img_links'] = $this->order_factory->get_img_links($order_id);
         $data['controller'] = 'order_controller';
-        $data['action'] = 'create';
+        $data['action'] = 'update';
         $data['module'] = 'order';
 
         $this->render('order', '/order_update', $data);
@@ -143,8 +147,7 @@ class Order_controller extends Frontend_Controller
             $role_id = $req->make_request('get', 'role_id', array(
                 'role_name' => 'manager'
             ));
-            if (!$role_id)
-            {
+            if (!$role_id) {
                 throw new Exception('Role name is not valid');
             }
 
@@ -176,8 +179,7 @@ class Order_controller extends Frontend_Controller
                 foreach ($cuss as $cus) {
                     $info[] = $this->order_factory->load_acc_orders_info($cus['id']);
                 }
-            }
-            //If is not manager => list all orders or filtered orders
+            } //If is not manager => list all orders or filtered orders
             else {
                 //Ask factory to perform filter data
                 //If has info from POST => Load filtered data
@@ -188,8 +190,7 @@ class Order_controller extends Frontend_Controller
                     $info = $this->order_factory->load_orders_info();
                 }
             }
-        }
-        else {
+        } else {
             throw new Exception('You are not logged in');
         }
 
@@ -205,7 +206,8 @@ class Order_controller extends Frontend_Controller
      * @param $info
      * @return string
      */
-    private function convert_grid_html($info){
+    private function convert_grid_html($info)
+    {
         $html = '';
         if (is_array($info)) {
             foreach ($info as $row) {
@@ -262,7 +264,6 @@ class Order_controller extends Frontend_Controller
     {
         $this->template_controller->demo_template('order', '/order_tracking');
     }
-
 
 
 }

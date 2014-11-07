@@ -7,7 +7,10 @@
  */
 
 class Img_controller extends Frontend_Controller {
-
+    /**
+     * @var \super_classes\InkiuCommentFactory
+     */
+    private $comment_factory;
     /**
      * @var super_classes\InkiuOrderFactory
      */
@@ -19,6 +22,7 @@ class Img_controller extends Frontend_Controller {
     function __construct() {
         parent::__construct();
         $this->order_factory = \super_classes\InkiuOrderFactory::get_instance();
+        $this->comment_factory = \super_classes\InkiuCommentFactory::get_instance();
         $this->load->module('template/template_controller');
     }
 
@@ -48,14 +52,64 @@ class Img_controller extends Frontend_Controller {
      */
     public function view_approve($id)
     {
-        $info = $this->order_factory->load_order_imgs($id);
+        $info = $this->order_factory->load_order_img($id);
+        $data['description'] = $this->order_factory->load_order_info($info['order_id'])['description'];
         $data['action'] = 'order/img_controller/approve';
         $data['info'] = $info;
+        $data['id'] = $id;
+        $result = $this->comment_factory->load_comments($id);
+        $comments = array();
+        foreach ($result as $com) {
+            //find reviewer's name
+            $req = new \super_classes\RestfulRequestMaker();
+            $acc = $req->make_request('get', 'account', array(
+                'id' => $com['reviewer_id']
+            ));
+            $com['reviewer'] = $acc['account_name'];
+            $comments[] = $com;
+        }
+
+        $data['comment'] = $comments;
         $this->render('order', 'approve', $data);
     }
 
     public function approve()
     {
 
+    }
+
+    public function view_upload($id)
+    {
+        $info = $this->order_factory->load_order_img($id);
+        $data['description'] = $this->order_factory->load_order_info($info['order_id'])['description'];
+        $data['id'] = $id;
+        $data['info'] = $info;
+        $this->render('order', 'refine_upload', $data);
+    }
+
+    public function upload()
+    {
+        $post = $this->input->post();
+        $status = $this->order_factory->update_img_path($post);
+        echo $status;
+    }
+
+    public function create_comment()
+    {
+        $post = $this->input->post();
+        $status = $this->comment_factory->create_comment($post);
+
+//        //find reviewer's name
+//        $req = new \super_classes\RestfulRequestMaker();
+//        $acc = $req->make_request('get', 'account', array(
+//            'id' => $post['img_id']
+//        ));
+//        $reviewer = $acc['account_name'] . "({$acc['staff_name']})";
+        $response = array(
+            'reviewer' => $this->session->userdata('acc_name'),
+            'time_commented' => date('Y-m-d H:i:s'),
+            'content' => $post['content']
+        );
+        echo json_encode($response);
     }
 } 
