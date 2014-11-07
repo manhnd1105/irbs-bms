@@ -161,6 +161,7 @@ class Model_order
             $this->db->trans_start();
             $this->db->delete('irbs.inkiu_order', array('inkiu_order.id' => $id));
             $this->db->delete('irbs.order', array('order.id' => $id));
+            $this->db->delete('irbs.order_detail', array('order_detail.order_id' => $id));
             $this->db->trans_complete();
         } catch (Exception $e)
         {
@@ -277,6 +278,29 @@ class Model_order
                 $result = $this->db->get()->row_array();
         }
         return $result;
+    }
+
+    public function update_img_path($id, $file_changed_path)
+    {
+        return $this->db->update(
+            'irbs.order_detail',
+            array(
+                'file_changed_path' => $file_changed_path,
+                'status_id' => '3'
+            ),
+            array('id' => $id)
+        );
+    }
+
+    public function update_img_status($id, $status_id)
+    {
+        return $this->db->update(
+            'irbs.order_detail',
+            array(
+                'status_id' => $status_id
+            ),
+            array('id' => $id)
+        );
     }
 }
 

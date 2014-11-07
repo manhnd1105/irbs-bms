@@ -30,11 +30,12 @@ echo '<td> Id</td>';
 echo '<td> Description</td>';
 echo '<td> Create date </td>';
 echo '<td> Creator</td>';
+echo '<td> Completion</td>';
 echo '<td> Action</td>';
 
 echo '</tr>';
 
-//if (isset($info)) {
+if (isset($info)) {
 $i = 1;
     foreach ($info as $row) {
         $order_id = $row['id'];
@@ -44,16 +45,15 @@ $i = 1;
             echo '<tr>';
         }
         echo '<td >' . $row['id'] . '</td>';
-        echo '<td >' . $row['description'] . '</td>';
+        echo '<td >' . anchor('order/order_controller/view_update/' . $order_id, substr($row['description'], 0, 30)) . '</td>';
         echo '<td>' . $row['creation_date'] . '</td>';
         echo '<td>' . $row['creator'] . '</td>';
-        echo '<td>' . anchor('order/order_controller/view_update/' . $order_id, 'View/Edit'), ' | ', anchor('order/order_controller/delete/' . $order_id, 'Remove') . '</td>';
+        echo '<td><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: ' . $row['progress']. ';">'. $row['progress'] . '</div></td>';
+        echo '<td>' . anchor('order/order_controller/delete/' . $order_id, 'Remove') . '</td>';
         echo '</tr>';
         $i++;
     }
-//}
-
-
+}
 echo '</table>';
 echo '</div>';
 echo '</div>';

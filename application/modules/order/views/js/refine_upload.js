@@ -125,13 +125,15 @@ $(document).ready(function () {
                 //for (var i = 0; i < img_links.length; i++) {
                 //    array_links.push(JSON.stringify(img_links[i]));
                 //}
-                $('#image_links').val(img_links);
-                $('#btn_submit').enable();
+                $('#image_links').val(JSON.parse(img_links));
+
                 //$('#uploaded_image').html(img_links);
                 //alert.html(res).fadeIn();
                 //$('#files').trigger('reset');
                 //$('#submit').html('Start upload');
-                //window.location.href = base_url + 'index.php/order/upload_controller/view_payment';
+                //window.location.href = base_url + 'index.php/order/img_controller';
+                alert('Uploaded');
+                $('#lastest_img').attr('src', JSON.parse(img_links));
             },
             error: function (e) {
                 console.log('error ' + e);
@@ -142,25 +144,21 @@ $(document).ready(function () {
     $('#btn_submit').click(function () {
         console.log('Button submit clicked');
         $.ajax({
-            'url': base_url + 'index.php/order/order_controller/create',
+            'url': base_url + 'index.php/order/img_controller/upload',
             'type': 'POST',
             //'dataType': 'json',
             'data': {
-                'description': $("#desc").val(),
-                'creation_date': $("#creation_date").val(),
-                'creator': $("#creator").val(),
-                'img_links': $('#image_links').val()
-
+                'id': $('input[name="id"]').val(),
+                'file_changed_path': $('#image_links').val()
             },
             'success': function (xhr) {
-                console.log('Order creation success');
+                console.log('Save success');
                 console.log(xhr);
-
-                window.location.href = base_url + 'index.php/order/order_controller/';
-                alert('Order created ' + xhr);
+                window.location.href = base_url + 'index.php/order/img_controller';
+                alert('Saved');
             },
             'error': function (xhr, b, c) {
-                console.log('Order creation fail');
+                console.log('fail');
                 console.log(xhr + b + c);
             }
         });

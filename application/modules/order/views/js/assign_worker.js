@@ -19,10 +19,14 @@ $(function () {
                 'acc_id': acc_list[0]
             },
             'success': function (xhr) {
-                $('#event_result').html(xhr);
+                //$('#event_result').html(xhr);
+                console.log(xhr);
+                alert('Assigned');
             },
             'error': function (xhr) {
-                $('#event_result').html('error' + xhr);
+                //$('#event_result').html('error' + xhr);
+                console.log(xhr);
+                alert('Error');
             }
         });
     });

@@ -166,6 +166,7 @@ class InkiuComment {
         $this->reviewer_id = $info['reviewer_id'];
         $this->content = $info['content'];
         $this->status = $info['status'];
+        $this->time_commented = $info['time_commented'];
     }
 
 

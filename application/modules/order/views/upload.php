@@ -68,7 +68,7 @@ echo '<li class="list-group-item">
     <input type="hidden" id="image_links"/>
 </li>
 <li class="list-group-item text-center">
-    <button class="btn btn-default" id="btn_submit">Create order</button>
+    <button class="btn btn-default" id="btn_submit" disabled="disabled">Create order</button>
 </li></ul>
 </div>
 <div class="col-sm-1 col-lg-2"></div>
