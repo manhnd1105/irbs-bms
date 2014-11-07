@@ -117,4 +117,4 @@ class Img_controller extends Frontend_Controller {
         );
         echo json_encode($response);
     }
-} 
+}
