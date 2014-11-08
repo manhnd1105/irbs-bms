@@ -218,6 +218,10 @@ class InkiuOrderFactory implements ISingleton
         );
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
     public function load_order_img($id)
     {
         return $this->model_order->get_joined_tables(
@@ -230,6 +234,11 @@ class InkiuOrderFactory implements ISingleton
             'irbs.order_detail AS t2, irbs.order_component_status AS t3'
         );
     }
+
+    /**
+     * @param $order_id
+     * @return array
+     */
     public function get_img_links($order_id)
     {
         $rows = $this->model_order->get_joined_tables(
@@ -247,6 +256,10 @@ class InkiuOrderFactory implements ISingleton
         return $links;
     }
 
+    /**
+     * @param $order_id
+     * @return array
+     */
     public function load_order_info($order_id)
     {
         return $this->model_order->read_multi_tables(
@@ -261,6 +274,10 @@ class InkiuOrderFactory implements ISingleton
         );
     }
 
+    /**
+     * @param $info
+     * @return array
+     */
     public function add_progress($info)
     {
         $result = array();
@@ -293,22 +310,52 @@ class InkiuOrderFactory implements ISingleton
             if ($done == 0 || $total == 0) {
                 $row['progress'] = '0%';
             } else {
-                $row['progress'] = (count($done_img) / count($img)). '%';
+                $row['progress'] = (count($done_img) * 100 / count($img)). '%';
             }
             $result[] = $row;
         }
         return $result;
     }
 
+    /**
+     * @param $info
+     * @return mixed
+     */
     public function update_img_path($info)
     {
         return $this->model_order->update_img_path($info['id'], $info['file_changed_path']);
     }
 
+    /**
+     * @param $id
+     * @param $status_id
+     * @return mixed
+     */
     public function update_img_status($id, $status_id)
     {
         return $this->model_order->update_img_status($id, $status_id);
     }
+
+    /**
+     * Find order id according to a file item id
+     * @param $file_id
+     * @return array
+     */
+    public function find_order_id($file_id)
+    {
+        return $this->model_order->find_order_id($file_id);
+    }
+
+    /**
+     * Find creator name according to an order id
+     * @param $order_id
+     * @return array
+     */
+    public function find_creator($order_id)
+    {
+        return $this->model_order->find_creator($order_id);
+    }
+
     /**
      * Private clone method to prevent cloning of the instance of the
      * *Singleton* instance.

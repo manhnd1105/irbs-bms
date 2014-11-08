@@ -6,10 +6,12 @@ $(document).ready(function () {
     //upload file to server
     $('#post').on('click', function (event) {
         event.preventDefault();
+        console.log($('#file_changed_path').attr('href'));
         var data = {
             "content": $('#content').val(),
             "img_id": $('input[name="id"]').val(),
-            "approve": $('input[name="approve"]:checked').val()
+            "approve": $('input[name="approve"]:checked').val(),
+            "file_changed_path": $('#file_changed_path').attr('href')
         };
         $.ajax({
             url: base_url + 'index.php/order/img_controller/create_comment',

@@ -44,7 +44,7 @@ echo '
             </li>';
 echo '
             <li class="list-group-item">';
-    echo '<div><a href="' . $info['file_path'] . '" class="thumbnail"><img src="' . $info['file_path'] . '" /></a></div>';
+    echo '<div><a id="file_changed_path" href="' . $info['file_changed_path'] . '" class="thumbnail"><img src="' . $info['file_changed_path'] . '" /></a></div>';
 echo '           </li>';
 echo '
         </ul>

@@ -302,6 +302,18 @@ class Model_order
             array('id' => $id)
         );
     }
+
+    public function find_order_id($file_id)
+    {
+        $sql = "SELECT order_id FROM irbs.order_detail WHERE id={$file_id}";
+        return $this->db->query($sql)->row_array()['order_id'];
+    }
+
+    public function find_creator($order_id)
+    {
+        $sql = "SELECT creator FROM irbs.inkiu_order WHERE id={$order_id}";
+        return $this->db->query($sql)->row_array()['creator'];
+    }
 }
 
 /**
