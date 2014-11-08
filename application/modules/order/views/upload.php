@@ -1,5 +1,6 @@
 <script type="text/javascript">
     base_url = '<?=base_url()?>';
+    fms_path = '<?=$fms_path?>'
 </script>
 <br/>
 <?php

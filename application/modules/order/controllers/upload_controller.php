@@ -27,6 +27,7 @@ class Upload_controller extends Frontend_Controller
         $data['controller'] = 'order_controller';
         $data['action'] = 'create';
         $data['module'] = 'order';
+        $data['fms_path'] = $this->config->item('fms_path');
 
         $this->template_controller->demo_template('order', '/upload', $data);
     }

@@ -99,7 +99,7 @@ $(document).ready(function () {
         //var bar = $('.progress-bar');
         $.ajax({
             //url: base_url + 'index.php/order/upload_controller/upload',
-            url: 'http://localhost/irbs-fms/index.php/file/image_controller/fms_receiver',
+            url: fms_path + '/file/image_controller/fms_receiver',
             type: "POST",
             data: formdata,
             processData: false,
